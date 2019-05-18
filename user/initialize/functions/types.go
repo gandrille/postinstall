@@ -29,13 +29,23 @@ func (info FunctionInfos) Describe() {
 type Executor func() result.Result
 
 func execute(title string, executors ...Executor) result.Result {
+	onlySkip := true
 	for _, exe := range executors {
 		if res := exe(); !res.IsSuccess() {
 			result.PrintRed(res.Message())
-			return result.Failure(title + " " + res.Message())
+			return result.NewError(title + " " + res.Message())
 		} else {
+			if !res.IsUnchanged() {
+				onlySkip = false
+			}
 			fmt.Println(res.Message())
 		}
 	}
-	return result.Success(title)
+
+	if onlySkip {
+		return result.NewUnchanged(title)
+	} else {
+		return result.NewUpdated(title)
+	}
+
 }

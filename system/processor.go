@@ -3,7 +3,11 @@ package system
 import (
 	"os/exec"
 	"strings"
+	"syscall"
 
+	"github.com/gandrille/go-commons/ini"
+
+	"github.com/gandrille/go-commons/env"
 	"github.com/gandrille/go-commons/filesystem"
 	"github.com/gandrille/go-commons/misc"
 	"github.com/gandrille/go-commons/result"
@@ -32,7 +36,8 @@ func getProcessors() []processor {
 	list = append(list, aptAutoremove{})
 	list = append(list, aptInstall{})
 	list = append(list, fuse{})
-	list = append(list, xfceplugins{})
+	list = append(list, symlink{})
+	list = append(list, inifile{})
 	list = append(list, debconf{})
 	return list
 }
@@ -54,7 +59,7 @@ func (e unknown) describe(args []string) string {
 }
 
 func (e unknown) run(args []string) result.Result {
-	return result.New(false, "NOT executed: "+e.describe(args))
+	return result.NewError("NOT executed: " + e.describe(args))
 }
 
 // ================
@@ -152,54 +157,61 @@ func (e fuse) describe(args []string) string {
 }
 
 func (e fuse) run(args []string) result.Result {
-	_, err := filesystem.CreateOrAppendIfNotInFile("/etc/fuse", "user_allow_other")
+	apended, err := filesystem.CreateOrAppendIfNotInFile("/etc/fuse", "user_allow_other")
 	if err != nil {
-		return result.New(false, e.describe(args)+" "+err.Error())
+		return result.NewError(e.describe(args) + " " + err.Error())
 	}
-	return result.New(true, e.describe(args))
+	if apended {
+		return result.NewUpdated("File /etc/fuse updated with user_allow_other option")
+	} else {
+		return result.NewUnchanged("File /etc/fuse already contains user_allow_other option")
+	}
 }
 
-// ======================
-// xfce-plugins processor
-// ======================
+// ==================
+// sym-link processor
+// ==================
 
-type xfceplugins struct {
+type symlink struct {
 }
 
-func (e xfceplugins) key() string {
-	return "xfce-plugins"
+func (e symlink) key() string {
+	return "sym-link"
 }
 
-func (e xfceplugins) describe(args []string) string {
-	return "xfce-plugins: installs all the Xfce plugins (quite a lot)"
+func (e symlink) describe(args []string) string {
+	return "Symbolic link: " + strings.Join(args, " --> ")
 }
 
-func (e xfceplugins) run(args []string) result.Result {
-	out, err := exec.Command("/usr/bin/apt-cache", "search", "--names-only", "xfce4-").Output()
+func (e symlink) run(args []string) result.Result {
+	return filesystem.UpdateOrCreateSymlink(args[0], args[1])
+}
+
+// ==================
+// ini-file processor
+// ==================
+
+type inifile struct {
+}
+
+func (e inifile) key() string {
+	return "ini-file"
+}
+
+func (e inifile) describe(args []string) string {
+	return "INI file: " + args[0] + " [" + args[1] + "] " + args[2] + " = " + args[3]
+}
+
+func (e inifile) run(args []string) result.Result {
+	updated, err := ini.SetValue(args[0], args[1], args[2], args[3], false, false)
 	if err != nil {
-		return result.New(false, e.key()+" : Can NOT get list of Xfce plugins")
+		return result.NewError(e.describe(args) + " " + err.Error())
 	}
-
-	// lines have the following format :
-	// xfce4-power-manager - Gestion de l'énergie...
-	// 1. keeps only the package name
-	// 2. asset the package name contains "plugin"
-	var plugins []string
-	for _, line := range strings.Split(string(out), "\n") {
-		idx := strings.Index(line, " ")
-		if idx != -1 {
-			name := line[:idx-1]
-			if strings.Index(name, "plugin") != -1 {
-				plugins = append(plugins, name)
-			}
-		}
+	if updated {
+		return result.NewUpdated(e.describe(args))
+	} else {
+		return result.NewUnchanged(e.describe(args))
 	}
-
-	if len(plugins) == 0 {
-		return result.New(true, e.key()+" NO Xfce plugin found")
-	}
-
-	return install(plugins, e.key()+" "+strings.Join(plugins, ","))
 }
 
 // =================
@@ -218,9 +230,11 @@ func (e debconf) describe(args []string) string {
 }
 
 func (e debconf) run(args []string) result.Result {
-	str := strings.Join(args, " ")
-	cmd := exec.Command("/usr/bin/debconf-set-selections", "-v")
-	return misc.RunCmdStdIn("Debconf "+str, str+"\n", cmd)
+	packageName := args[0]
+	keyName := args[1]
+	typeName := args[2]
+	value := args[3]
+	return env.WriteDebconfKey(packageName, keyName, typeName, value)
 }
 
 // =========
@@ -228,7 +242,68 @@ func (e debconf) run(args []string) result.Result {
 // =========
 
 func install(args []string, describe string) result.Result {
+
+	// No need to install
+	if isAllInstalled(args) {
+		switch len(args) {
+		case 0:
+			return result.NewError("NO Packages provided on the configuration file. Please double check it.")
+		case 1:
+			return result.NewUnchanged("Package " + args[0] + " already installed")
+		default:
+			return result.NewUnchanged("Packages " + strings.Join(args, ", ") + " already installed")
+		}
+	}
+
+	// installation needed
 	fullArgs := append([]string{"install", "--yes"}, args...)
 	cmd := exec.Command("/usr/bin/apt", fullArgs...)
 	return misc.RunCmd(cmd, describe)
+}
+
+func isAllInstalled(packageNames []string) bool {
+	for _, name := range packageNames {
+		if ok, _ := isInstalled(name); !ok {
+			return false
+		}
+	}
+	return true
+}
+
+func isInstalled(packageName string) (bool, error) {
+	out, err := exec.Command("/usr/bin/dpkg-query", "-W", "-f=${db:Status-Abbrev}", packageName).Output()
+	if err != nil {
+		status := getStatusCode(err)
+		switch status {
+		case 0:
+			return true, nil
+		case 1:
+			return false, nil
+		default:
+			return false, err
+		}
+	} else {
+		output := string(out)
+		if output == "ii" || output == "ii " {
+			return true, nil
+		} else {
+			return false, nil
+		}
+	}
+}
+
+// TODO when upgrading to golang 1.12, use exitError.ExitCode() instead
+// if exitError, ok := err.(*exec.ExitError); ok {
+//   code := exitError.ExitCode()
+// }
+// return -1 if unknown
+func getStatusCode(err error) int {
+	if exiterr, ok := err.(*exec.ExitError); ok {
+		if status, ok := exiterr.Sys().(syscall.WaitStatus); ok {
+			return status.ExitStatus()
+		}
+	} else {
+		return -1
+	}
+	return -1
 }

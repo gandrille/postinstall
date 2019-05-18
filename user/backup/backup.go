@@ -53,20 +53,20 @@ func backups(zipFilePath string) result.Set {
 	results := backupAll(w)
 
 	if err := w.Close(); err != nil {
-		return results.Add(result.Failure("Error while closing zip byte content"))
+		return results.Add(result.NewError("Error while closing zip byte content"))
 	}
 
 	f, err := os.Create(zipFilePath)
 	defer f.Close()
 	if err != nil {
-		return results.Add(result.Failure("Error while creating zip file " + zipFilePath))
+		return results.Add(result.NewError("Error while creating zip file " + zipFilePath))
 	}
 
 	if _, err := f.Write(buf.Bytes()); err != nil {
-		return results.Add(result.Failure("Error while writing zip file"))
+		return results.Add(result.NewError("Error while writing zip file"))
 	}
 
-	return results.Add(result.Success("zip file written to " + zipFilePath))
+	return results.Add(result.NewUpdated("zip file written to " + zipFilePath))
 }
 
 func backupAll(writer *zip.Writer) result.Set {

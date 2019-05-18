@@ -31,13 +31,13 @@ func CreateOrAppendAssetContentIfNotInFile(assetName, filePath string) result.Re
 	fileContent := AssetAsString(assetName)
 	switch updated, err := filesystem.CreateOrAppendIfNotInFile(filePath, fileContent); {
 	case err != nil:
-		return result.Failure(filePath + " NOT updated : " + err.Error())
+		return result.NewError(filePath + " NOT updated : " + err.Error())
 	case updated:
-		return result.Success(filePath + " updated with specific content")
+		return result.NewUpdated(filePath + " updated with specific content")
 	case !updated:
-		return result.Success(filePath + " already includes expected content")
+		return result.NewUnchanged(filePath + " already includes expected content")
 	}
-	return result.Failure("Just for Linter not to complain")
+	return result.NewError("Just for Linter not to complain")
 }
 
 // WriteAsset writes an asset to the filesystem.
@@ -46,7 +46,7 @@ func WriteAsset(assetName, filePath string, overwrite bool) result.Result {
 	// Get new content
 	bytes, err := Asset(assetName)
 	if err != nil {
-		return result.Failure("Can't find asset inside executable")
+		return result.NewError("Can't find asset inside executable")
 	}
 
 	return filesystem.WriteBinaryFile(filePath, bytes, overwrite)
@@ -66,19 +66,25 @@ func CopyAssetDirectory(assetPrefix, dirPath string, overwrite bool) result.Resu
 	}
 
 	msg := ""
+	allskipped := true
 	for _, assetName := range AssetNames() {
 		if strings.HasPrefix(assetName, assetPrefix) {
 			filePath := dirPath + strings.TrimPrefix(assetName, assetPrefix)
 			if res := WriteAsset(assetName, filePath, overwrite); !res.IsSuccess() {
-				return result.Failure("Can't copy " + assetName + " to " + filePath + ": " + res.Message())
+				return result.NewError("Can't copy " + assetName + " to " + filePath + ": " + res.Message())
 			} else {
 				if msg != "" {
 					msg += "\n"
 				}
 				msg += res.Message()
+				allskipped = allskipped && res.IsUnchanged()
 			}
 		}
 	}
 
-	return result.Success(msg)
+	if allskipped {
+		return result.NewUnchanged(msg)
+	} else {
+		return result.NewCreated(msg)
+	}
 }

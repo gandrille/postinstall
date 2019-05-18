@@ -88,7 +88,21 @@ func getProfileContent(name string) string {
 	if err != nil {
 		log.Fatal("Can't read asset " + assetname)
 	}
-	return string(bytes)
+
+	// Filtering and merging consecutive empty lines into a single one
+	lines := strings.Split(string(bytes), "\n")
+	var filtered []string
+	lastLineEmpty := true
+	for _, line := range lines {
+		if !strings.HasPrefix(line, "##") {
+			if !lastLineEmpty || strings.Trim(line, " ") != "" {
+				filtered = append(filtered, line)
+			}
+			lastLineEmpty = (line == "")
+		}
+	}
+
+	return strings.Join(filtered, "\n")
 }
 
 func printSelectedProfiles(profils []string) {

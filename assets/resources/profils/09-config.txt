@@ -1,12 +1,16 @@
-###################################
+#--------------------------------------------
 # Valid commands
 # - apt-update
 # - apt-upgrade
 # - apt-autoremove
 # - apt-install <packages-names>
 # - fuse-conf
-# - xfce-plugins
-# - deb-conf <args>
-###################################
+# - sym-link <existing> <alias>
+# - ini-file <file> <section> <key> <value>
+# - deb-conf <package> <key> <type> <value>
+#--------------------------------------------
+## Lines starting with two hash signs are comments which are not printed on CLI
 
 fuse-conf
+### Updates the login screen background image (when using LightDM login screen)
+ini-file /etc/lightdm/lightdm-gtk-greeter.conf greeter background /usr/share/xfce4/backdrops/xubuntu-yakkety.png

@@ -41,7 +41,7 @@ func getInitFunctions() []functions.Function {
 
 	list = append(list, functions.FreedesktopFunction{})
 	list = append(list, functions.XfceDesktopFunction{})
-	list = append(list, functions.XfceAppFunction{})
+	list = append(list, functions.GnomeDesktopFunction{})
 	list = append(list, functions.BashrcFunction{})
 	list = append(list, functions.ZimFunction{})
 	list = append(list, functions.MvnSettingsFunction{})

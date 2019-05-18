@@ -1,20 +1,19 @@
-###################################
+#--------------------------------------------
 # Valid commands
 # - apt-update
 # - apt-upgrade
 # - apt-autoremove
 # - apt-install <packages-names>
 # - fuse-conf
-# - xfce-plugins
-# - deb-conf <args>
-###################################
+# - sym-link <existing> <alias>
+# - ini-file <file> <section> <key> <value>
+# - deb-conf <package> <key> <type> <value>
+#--------------------------------------------
+## Lines starting with two hash signs are comments which are not printed on CLI
 
 # presenter
 apt-install disper
 apt-install pdf-presenter-console
-
-# in order to have ver num activated after boot time
-apt-install numlockx
 
 # softwares
 apt-install libreoffice
@@ -40,3 +39,9 @@ apt-install shotwell
 apt-install audacity
 apt-install vlc
 apt-install openshot
+
+## ===============================================================
+## The following packages are installed by default on XUbunt 18.04
+## and are not needed anymore
+## apt-install numlockx
+## ===============================================================
