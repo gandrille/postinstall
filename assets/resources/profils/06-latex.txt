@@ -1,0 +1,19 @@
+###################################
+# Valid commands
+# - apt-update
+# - apt-upgrade
+# - apt-autoremove
+# - apt-install <packages-names>
+# - fuse-conf
+# - xfce-plugins
+# - deb-conf <args>
+###################################
+
+# Full LaTeX installation
+apt-install texlive
+apt-install texlive-full
+apt-install texlive-latex-extra
+apt-install texlive-lang-french
+
+# in order to get pdfbook2
+apt-install texlive-extra-utils

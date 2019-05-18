@@ -1,0 +1,33 @@
+###################################
+# Valid commands
+# - apt-update
+# - apt-upgrade
+# - apt-autoremove
+# - apt-install <packages-names>
+# - fuse-conf
+# - xfce-plugins
+# - deb-conf <args>
+###################################
+
+# Pure xfce
+# =========
+
+apt-install xfce4 xfce4-goodies xfwm4-themes
+xfce-plugins
+apt-install xubuntu-restricted-addons
+
+# Gnome for Xfce
+# ==============
+
+# laptop special keys support (to control screen luminosity)
+apt-install gnome-applets
+
+apt-install system-config-printer-gnome
+
+apt-install gnome-font-viewer
+apt-install gnome-screenshot
+apt-install thunderbird-gnome-support
+
+apt-install evince
+apt-install meld
+apt-install gedit

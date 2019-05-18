@@ -1,0 +1,14 @@
+###################################
+# Valid commands
+# - apt-update
+# - apt-upgrade
+# - apt-autoremove
+# - apt-install <packages-names>
+# - fuse-conf
+# - xfce-plugins
+# - deb-conf <args>
+###################################
+
+apt-update
+apt-upgrade
+apt-autoremove

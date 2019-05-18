@@ -1,0 +1,14 @@
+# You can freely update this file
+
+# Path configuration
+# ==================
+
+#PATH=$PATH:/foo:/bar"
+
+# Diagnostic
+# ==========
+
+# testDf 90
+# testTrash 50
+
+# checkMountPoint /foo/bar/baz

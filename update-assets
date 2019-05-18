@@ -1,0 +1,32 @@
+#!/bin/bash
+
+dirName=$(dirname $0)
+progName=$(basename $0)
+
+success()   { [ -t 1 ] && tput setaf 2; echo -n "[OK] ";    [ -t 1 ] && tput sgr0; echo "$*"; }
+error()     { [ -t 1 ] && tput setaf 1; echo -n "[ERROR] "; [ -t 1 ] && tput sgr0; echo "$*"; }
+fatal()     { [ -t 1 ] && tput setaf 1; echo -n "[ERROR] "; [ -t 1 ] && tput sgr0; echo "$*"; exit 1; }
+highlight() { [ -t 1 ] && tput setaf 3; echo    "$*";       [ -t 1 ] && tput sgr0; return 0; }
+
+set -euo pipefail
+trap "fatal 'Non-null value returned by last executed command'" ERR
+
+# we need go-bindata
+go get -u github.com/go-bindata/go-bindata/...
+success "go-bindata updated"
+
+# zim template
+rm -Rf $dirName/assets/resources/zim-simple-web-template
+git clone --quiet https://github.com/gandrille/zim-simple-web-template.git $dirName/assets/resources/zim-simple-web-template
+rm -Rf $dirName/assets/resources/zim-simple-web-template/.git
+success "zim zim-simple-web-template updated"
+
+# zim style
+wget --quiet -O $dirName/assets/resources/zim-style.conf https://gandrille.github.io/linux-notes/Softs/zim/style.conf
+success "zim style updated"
+
+# generate
+PATH=$PATH:$GOPATH/bin
+go generate -x $GOPATH/src/github.com/gandrille/postinstall/assets/assetsgenerator.go
+success "go bindata generated"
+

@@ -1,0 +1,42 @@
+###################################
+# Valid commands
+# - apt-update
+# - apt-upgrade
+# - apt-autoremove
+# - apt-install <packages-names>
+# - fuse-conf
+# - xfce-plugins
+# - deb-conf <args>
+###################################
+
+# presenter
+apt-install disper
+apt-install pdf-presenter-console
+
+# in order to have ver num activated after boot time
+apt-install numlockx
+
+# softwares
+apt-install libreoffice
+apt-install myspell-fr
+apt-install focuswriter
+apt-install inkscape
+apt-install gimp
+apt-install dia
+apt-install pinta
+apt-install homebank
+apt-install keepassx
+apt-install zim
+apt-install filezilla
+
+deb-conf wireshark-common wireshark-common/install-setuid boolean true
+apt-install wireshark
+
+apt-install rdesktop
+apt-install bookletimposer
+
+# audio & video
+apt-install shotwell
+apt-install audacity
+apt-install vlc
+apt-install openshot

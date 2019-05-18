@@ -1,0 +1,17 @@
+###################################
+# Valid commands
+# - apt-update
+# - apt-upgrade
+# - apt-autoremove
+# - apt-install <packages-names>
+# - fuse-conf
+# - xfce-plugins
+# - deb-conf <args>
+###################################
+
+# etcher
+apt-install libgconf2-dev
+apt-install libssl-dev
+
+apt-install lame
+apt-install libavcodec-extra

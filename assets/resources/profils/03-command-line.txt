@@ -1,0 +1,58 @@
+###################################
+# Valid commands
+# - apt-update
+# - apt-upgrade
+# - apt-autoremove
+# - apt-install <packages-names>
+# - fuse-conf
+# - xfce-plugins
+# - deb-conf <args>
+###################################
+
+# audio / video
+apt-install ffmpeg
+apt-install sox
+apt-install mpg123
+apt-install mp3splt
+apt-install id3v2
+apt-install mediainfo
+
+# command line interface
+apt-install p7zip-full 
+apt-install unrar
+apt-install vim
+apt-install rsync
+apt-install unison 
+apt-install lftp
+apt-install jq
+apt-install shellcheck
+apt-install lsof
+apt-install whiptail
+apt-install g++
+apt-install libboost-all-dev
+apt-install python
+apt-install ldap-utils
+apt-install inxi
+apt-install curl
+apt-install dos2unix
+apt-install apache2-utils
+apt-install subversion
+apt-install git
+apt-install tree
+apt-install concalc
+apt-install inotify-tools
+apt-install trash-cli
+apt-install whois
+apt-install nmap
+apt-install qrencode
+apt-install wkhtmltopdf
+#apt-install wkhtmltoimage
+apt-install pv
+apt-install rlwrap
+
+apt-install pandoc
+
+# xml and pdf support
+apt-install xsltproc
+apt-install libxml2-utils
+apt-install fop

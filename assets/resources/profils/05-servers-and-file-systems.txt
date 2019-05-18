@@ -1,0 +1,22 @@
+###################################
+# Valid commands
+# - apt-update
+# - apt-upgrade
+# - apt-autoremove
+# - apt-install <packages-names>
+# - fuse-conf
+# - xfce-plugins
+# - deb-conf <args>
+###################################
+
+apt-install openssh-server
+apt-install sshfs
+apt-install samba
+apt-install smbclient 
+apt-install cifs-utils
+apt-install gparted
+
+# iptables-persistent
+deb-conf iptables-persistent iptables-persistent/autosave_v4 boolean false
+deb-conf iptables-persistent iptables-persistent/autosave_v6 boolean false
+apt-install iptables-persistent
