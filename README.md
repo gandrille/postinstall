@@ -33,7 +33,7 @@ go install src/github.com/gandrille/postinstall/postinstall.go
 
 **v1.0** Designed for XUbuntu 18.04
 
-**v0.9** Pre-release
+**[v0.9](../../releases/tag/v0.9)** Pre-release
 
 
 ## Known Bugs
