@@ -24,13 +24,16 @@ user-restore file   restores a user defined config from a file
 ## Build
 
 ```
-go get ...
+go get github.com/gandrille/postinstall/...
+go install src/github.com/gandrille/postinstall/postinstall.go 
 ```
 
 
 ## Changelog
 
 **v1.0** Designed for XUbuntu 18.04
+
+**v0.9** Pre-release
 
 
 ## Known Bugs
