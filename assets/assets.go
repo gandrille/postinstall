@@ -112,7 +112,7 @@ func resourcesBashrc() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "resources/bashrc", size: 127, mode: os.FileMode(436), modTime: time.Unix(1558113452, 0)}
+	info := bindataFileInfo{name: "resources/bashrc", size: 127, mode: os.FileMode(436), modTime: time.Unix(1558268441, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -132,7 +132,7 @@ func resourcesBashrcCommon() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "resources/bashrc-common", size: 3358, mode: os.FileMode(436), modTime: time.Unix(1558113452, 0)}
+	info := bindataFileInfo{name: "resources/bashrc-common", size: 3358, mode: os.FileMode(436), modTime: time.Unix(1558268441, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -152,7 +152,7 @@ func resourcesBashrcPerso() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "resources/bashrc-perso", size: 188, mode: os.FileMode(436), modTime: time.Unix(1558113452, 0)}
+	info := bindataFileInfo{name: "resources/bashrc-perso", size: 188, mode: os.FileMode(436), modTime: time.Unix(1558268441, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -172,7 +172,7 @@ func resourcesSettingsXml() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "resources/settings.xml", size: 1818, mode: os.FileMode(436), modTime: time.Unix(1558113452, 0)}
+	info := bindataFileInfo{name: "resources/settings.xml", size: 1818, mode: os.FileMode(436), modTime: time.Unix(1558268441, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -192,7 +192,7 @@ func resourcesZimStyleConf() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "resources/zim-style.conf", size: 1017, mode: os.FileMode(436), modTime: time.Unix(1558165068, 0)}
+	info := bindataFileInfo{name: "resources/zim-style.conf", size: 1017, mode: os.FileMode(436), modTime: time.Unix(1558207289, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -212,7 +212,7 @@ func resourcesZimSymbolsList() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "resources/zim-symbols.list", size: 68, mode: os.FileMode(436), modTime: time.Unix(1558113498, 0)}
+	info := bindataFileInfo{name: "resources/zim-symbols.list", size: 68, mode: os.FileMode(436), modTime: time.Unix(1558268441, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -232,7 +232,7 @@ func resourcesProfils01PreparationTxt() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "resources/profils/01-preparation.txt", size: 262, mode: os.FileMode(436), modTime: time.Unix(1558113452, 0)}
+	info := bindataFileInfo{name: "resources/profils/01-preparation.txt", size: 262, mode: os.FileMode(436), modTime: time.Unix(1558268441, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -252,7 +252,7 @@ func resourcesProfils02SoftwaresTxt() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "resources/profils/02-softwares.txt", size: 839, mode: os.FileMode(436), modTime: time.Unix(1558113452, 0)}
+	info := bindataFileInfo{name: "resources/profils/02-softwares.txt", size: 839, mode: os.FileMode(436), modTime: time.Unix(1558268441, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -272,7 +272,7 @@ func resourcesProfils03CommandLineTxt() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "resources/profils/03-command-line.txt", size: 1108, mode: os.FileMode(436), modTime: time.Unix(1558113452, 0)}
+	info := bindataFileInfo{name: "resources/profils/03-command-line.txt", size: 1108, mode: os.FileMode(436), modTime: time.Unix(1558268441, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -292,7 +292,7 @@ func resourcesProfils04LibsAndCodecsTxt() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "resources/profils/04-libs-and-codecs.txt", size: 329, mode: os.FileMode(436), modTime: time.Unix(1558113452, 0)}
+	info := bindataFileInfo{name: "resources/profils/04-libs-and-codecs.txt", size: 329, mode: os.FileMode(436), modTime: time.Unix(1558268441, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -312,7 +312,7 @@ func resourcesProfils05ServersAndFileSystemsTxt() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "resources/profils/05-servers-and-file-systems.txt", size: 558, mode: os.FileMode(436), modTime: time.Unix(1558113452, 0)}
+	info := bindataFileInfo{name: "resources/profils/05-servers-and-file-systems.txt", size: 558, mode: os.FileMode(436), modTime: time.Unix(1558268441, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -332,7 +332,7 @@ func resourcesProfils06LatexTxt() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "resources/profils/06-latex.txt", size: 419, mode: os.FileMode(436), modTime: time.Unix(1558113452, 0)}
+	info := bindataFileInfo{name: "resources/profils/06-latex.txt", size: 419, mode: os.FileMode(436), modTime: time.Unix(1558268441, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -352,7 +352,7 @@ func resourcesProfils07IconsAndFontsTxt() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "resources/profils/07-icons-and-fonts.txt", size: 778, mode: os.FileMode(436), modTime: time.Unix(1558113452, 0)}
+	info := bindataFileInfo{name: "resources/profils/07-icons-and-fonts.txt", size: 778, mode: os.FileMode(436), modTime: time.Unix(1558268441, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -372,7 +372,7 @@ func resourcesProfils08XfceTxt() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "resources/profils/08-xfce.txt", size: 662, mode: os.FileMode(436), modTime: time.Unix(1558113452, 0)}
+	info := bindataFileInfo{name: "resources/profils/08-xfce.txt", size: 662, mode: os.FileMode(436), modTime: time.Unix(1558268441, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -392,7 +392,7 @@ func resourcesProfils09ConfigTxt() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "resources/profils/09-config.txt", size: 234, mode: os.FileMode(420), modTime: time.Unix(1558113452, 0)}
+	info := bindataFileInfo{name: "resources/profils/09-config.txt", size: 234, mode: os.FileMode(436), modTime: time.Unix(1558268441, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -412,7 +412,7 @@ func resourcesProfils10OwncloudTxt() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "resources/profils/10-owncloud.txt", size: 252, mode: os.FileMode(420), modTime: time.Unix(1558113452, 0)}
+	info := bindataFileInfo{name: "resources/profils/10-owncloud.txt", size: 252, mode: os.FileMode(436), modTime: time.Unix(1558268441, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -432,7 +432,7 @@ func resourcesZimSimpleWebTemplateReadmeMd() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "resources/zim-simple-web-template/README.md", size: 257, mode: os.FileMode(436), modTime: time.Unix(1558168032, 0)}
+	info := bindataFileInfo{name: "resources/zim-simple-web-template/README.md", size: 257, mode: os.FileMode(436), modTime: time.Unix(1558268474, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -452,7 +452,7 @@ func resourcesZimSimpleWebTemplateSimplewebHtml() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "resources/zim-simple-web-template/SimpleWeb.html", size: 3482, mode: os.FileMode(436), modTime: time.Unix(1558168032, 0)}
+	info := bindataFileInfo{name: "resources/zim-simple-web-template/SimpleWeb.html", size: 3482, mode: os.FileMode(436), modTime: time.Unix(1558268474, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -472,7 +472,7 @@ func resourcesZimSimpleWebTemplateSimplewebJquery1124MinJs() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "resources/zim-simple-web-template/SimpleWeb/jquery-1.12.4.min.js", size: 97163, mode: os.FileMode(436), modTime: time.Unix(1558168032, 0)}
+	info := bindataFileInfo{name: "resources/zim-simple-web-template/SimpleWeb/jquery-1.12.4.min.js", size: 97163, mode: os.FileMode(436), modTime: time.Unix(1558268474, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -492,7 +492,7 @@ func resourcesZimSimpleWebTemplateSimplewebJqueryToc040Js() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "resources/zim-simple-web-template/SimpleWeb/jquery-toc-0.4.0.js", size: 4806, mode: os.FileMode(436), modTime: time.Unix(1558168032, 0)}
+	info := bindataFileInfo{name: "resources/zim-simple-web-template/SimpleWeb/jquery-toc-0.4.0.js", size: 4806, mode: os.FileMode(436), modTime: time.Unix(1558268474, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -512,7 +512,7 @@ func resourcesZimSimpleWebTemplateSimplewebStyleCss() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "resources/zim-simple-web-template/SimpleWeb/style.css", size: 3801, mode: os.FileMode(436), modTime: time.Unix(1558168032, 0)}
+	info := bindataFileInfo{name: "resources/zim-simple-web-template/SimpleWeb/style.css", size: 3801, mode: os.FileMode(436), modTime: time.Unix(1558268474, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }

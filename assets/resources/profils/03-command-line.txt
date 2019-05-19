@@ -1,4 +1,4 @@
-###################################
+#----------------------------------
 # Valid commands
 # - apt-update
 # - apt-upgrade
@@ -7,7 +7,8 @@
 # - fuse-conf
 # - xfce-plugins
 # - deb-conf <args>
-###################################
+#----------------------------------
+## Lines starting with two hash signs are comments which are not printed on CLI
 
 # audio / video
 apt-install ffmpeg
@@ -46,7 +47,7 @@ apt-install whois
 apt-install nmap
 apt-install qrencode
 apt-install wkhtmltopdf
-#apt-install wkhtmltoimage
+## by the past, it was wkhtmltoimage package
 apt-install pv
 apt-install rlwrap
 
