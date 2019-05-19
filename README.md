@@ -25,6 +25,7 @@ user-restore file   restores a user defined config from a file
 
 ```
 go get github.com/gandrille/postinstall/...
+src/github.com/gandrille/postinstall/update-assets
 go install src/github.com/gandrille/postinstall/postinstall.go 
 ```
 
