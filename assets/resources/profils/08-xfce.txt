@@ -1,21 +1,32 @@
-#----------------------------------
+#--------------------------------------------
 # Valid commands
 # - apt-update
 # - apt-upgrade
 # - apt-autoremove
 # - apt-install <packages-names>
 # - fuse-conf
-# - xfce-plugins
-# - deb-conf <args>
-#----------------------------------
+# - sym-link <existing> <alias>
+# - ini-file <file> <section> <key> <value>
+# - deb-conf <package> <key> <type> <value>
+#--------------------------------------------
 ## Lines starting with two hash signs are comments which are not printed on CLI
 
 # Pure xfce
 # =========
 
-apt-install xfce4 xfce4-goodies xfwm4-themes
-xfce-plugins
-apt-install xubuntu-restricted-addons
+# Core xfce
+apt-install xfce4
+
+# xfce plugins (quite a lot packaged inside xfce4-goodies)
+apt-install xfce4-goodies
+
+## The following plugins are installed by default in XUbuntu 18.04 (bionic)
+## dpkg -l 'xfce4-*-plugin*' 
+## apt-install xfce4-pulseaudio-plugin
+## apt-install xfce4-power-manager-plugins
+
+# xfwm4-themes is not available anymore since Ubuntu 19.04 (disco) 
+apt-install xfwm4-themes
 
 # Gnome for Xfce
 # ==============
@@ -24,11 +35,16 @@ apt-install xubuntu-restricted-addons
 apt-install gnome-applets
 
 apt-install system-config-printer-gnome
-
-apt-install gnome-font-viewer
 apt-install gnome-screenshot
 apt-install thunderbird-gnome-support
 
+apt-install gedit
 apt-install evince
 apt-install meld
-apt-install gedit
+apt-install gitg
+
+## ===============================================================
+## The following packages are installed by default on XUbunt 18.04
+## and are not needed anymore
+## apt-install gnome-font-viewer
+## ===============================================================

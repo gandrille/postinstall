@@ -17,19 +17,26 @@ type BluemanFunction struct {
 func (f BluemanFunction) Infos() FunctionInfos {
 	return FunctionInfos{
 		Title:            "Blueman download folder",
-		ShortDescription: "Sets the blueman shared folder",
-		LongDescription:  "Sets the blueman shared folder to an arbitrary existing folder to avoid a popup with an error message at startup.",
+		ShortDescription: "Sets blueman shared folder",
+		LongDescription:  "Sets blueman shared folder to the current value of $XDG_DOWNLOAD_DIR (to avoid a popup with an error message at startup).",
 	}
 }
 
 // Run function
 func (f BluemanFunction) Run() result.Result {
-	dir := filesystem.HomeDir() + "/.config/blueman"
+
+	dir, err := env.ReadXdgDir("DOWNLOAD")
+	if err != nil {
+		return result.NewError(err.Error())
+	}
+
 	key := "/org/blueman/transfer/shared-path"
 	value := "'" + dir + "'"
 
 	f1 := func() result.Result { return filesystem.CreateFolderIfNeeded(dir) }
-	f2 := func() result.Result { return env.WriteDconfKey(key, value) }
+	f2 := func() result.Result {
+		return env.WriteDconfKey(key, value).StandardizeMessage("Blueman shared folder", value)
+	}
 
 	return execute(f.Infos().Title, f1, f2)
 }

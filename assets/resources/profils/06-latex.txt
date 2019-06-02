@@ -1,20 +1,23 @@
-#----------------------------------
+#--------------------------------------------
 # Valid commands
 # - apt-update
 # - apt-upgrade
 # - apt-autoremove
 # - apt-install <packages-names>
 # - fuse-conf
-# - xfce-plugins
-# - deb-conf <args>
-#----------------------------------
+# - sym-link <existing> <alias>
+# - ini-file <file> <section> <key> <value>
+# - deb-conf <package> <key> <type> <value>
+#--------------------------------------------
 ## Lines starting with two hash signs are comments which are not printed on CLI
 
-# Full LaTeX installation
-apt-install texlive
 apt-install texlive-full
-apt-install texlive-latex-extra
-apt-install texlive-lang-french
 
-# in order to get pdfbook2
-apt-install texlive-extra-utils
+## =================================================================
+## The following packages are installed by default with texlive-full
+## apt-install texlive
+## apt-install texlive-latex-extra
+## apt-install texlive-lang-french
+## # in order to get pdfbook2
+## apt-install texlive-extra-utils
+## =================================================================

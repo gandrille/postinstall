@@ -89,12 +89,16 @@ func getProfileContent(name string) string {
 		log.Fatal("Can't read asset " + assetname)
 	}
 
-	// Filtering
+	// Filtering and merging consecutive empty lines into a single one
 	lines := strings.Split(string(bytes), "\n")
 	var filtered []string
+	lastLineEmpty := true
 	for _, line := range lines {
 		if !strings.HasPrefix(line, "##") {
-			filtered = append(filtered, line)
+			if !lastLineEmpty || strings.Trim(line, " ") != "" {
+				filtered = append(filtered, line)
+			}
+			lastLineEmpty = (line == "")
 		}
 	}
 

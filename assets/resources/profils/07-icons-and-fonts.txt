@@ -1,21 +1,22 @@
-#----------------------------------
+#--------------------------------------------
 # Valid commands
 # - apt-update
 # - apt-upgrade
 # - apt-autoremove
 # - apt-install <packages-names>
 # - fuse-conf
-# - xfce-plugins
-# - deb-conf <args>
-#----------------------------------
+# - sym-link <existing> <alias>
+# - ini-file <file> <section> <key> <value>
+# - deb-conf <package> <key> <type> <value>
+#--------------------------------------------
 ## Lines starting with two hash signs are comments which are not printed on CLI
 
+apt-install papirus-icon-theme
 apt-install deepin-icon-theme
 apt-install arc-theme
-apt-install pocillo-icon-theme
-apt-install papirus-icon-theme
 apt-install ubuntu-budgie-themes
 apt-install moka-icon-theme
+apt-install pocillo-icon-theme
 apt-install oxygen-icon-theme 
 
 apt-install libreoffice-style-oxygen
@@ -23,10 +24,11 @@ apt-install libreoffice-style-elementary
 
 apt-install fonts-cantarell
 apt-install fonts-dosis
-apt-install fonts-font-awesome
 apt-install fonts-hack-ttf
 apt-install fonts-inconsolata
-apt-install fonts-lato
 apt-install fonts-roboto
 apt-install fonts-ubuntu-font-family-console
 apt-install ttf-ubuntu-font-family
+# The following fonts are already installed if you have selected latex
+apt-install fonts-font-awesome
+apt-install fonts-lato

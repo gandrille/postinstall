@@ -35,10 +35,9 @@ func getSources() []source {
 
 	sources = append(sources, UnisonSource{})
 	sources = append(sources, CrontabSource{})
+	sources = append(sources, XfceSource{})
 	sources = append(sources, FstabSource{})
 	sources = append(sources, LsblkSource{})
-
-	sources = append(sources, XfceSource{})
 
 	return sources
 }
@@ -60,7 +59,7 @@ func (src FileSource) Restore(zip zipfile.ZipFile) result.Result {
 	if zip.HasFile(src.zipPath) {
 		return zip.GetFile(src.zipPath).Write(src.filePath)
 	}
-	return result.Success(src.zipPath + " not found in zip file (skipped)")
+	return result.NewError(src.zipPath + " not found in zip file (skipped)")
 }
 
 func (src FileSource) Describe() {
@@ -82,7 +81,7 @@ func (src DirSource) Backup(writer *zip.Writer) result.Result {
 
 func (src DirSource) Restore(zip zipfile.ZipFile) result.Result {
 	files := zip.FilesStartingWith(src.zipPath)
-	return copyFilesToFolder(files, src.dirPath)
+	return copyFilesToFolder(files, src.zipPath, src.dirPath)
 }
 
 func (src DirSource) Describe() {
@@ -111,7 +110,7 @@ func (src UnisonSource) Backup(writer *zip.Writer) result.Result {
 func (src UnisonSource) Restore(zip zipfile.ZipFile) result.Result {
 	// we have backup only the necessary... so we can restore everything
 	files := zip.FilesStartingWith("unison")
-	return copyFilesToFolder(files, "~/.unison")
+	return copyFilesToFolder(files, "unison", "~/.unison")
 }
 
 func (src UnisonSource) Describe() {
@@ -129,7 +128,7 @@ func (src CrontabSource) Backup(writer *zip.Writer) result.Result {
 	ct := getCurrentCrontab()
 
 	if ct == "" {
-		return result.Success("Crontab is NOT available")
+		return result.NewUnchanged("NO user crontab defined")
 	}
 	return ProcessBytes("crontab", "crontab", []byte(ct), writer)
 }
@@ -137,12 +136,16 @@ func (src CrontabSource) Backup(writer *zip.Writer) result.Result {
 func (src CrontabSource) Restore(zip zipfile.ZipFile) result.Result {
 	zipCT, err := getCrontabInZip(zip)
 	if err != nil {
-		return result.Failure(err.Error())
+		return result.NewError(err.Error())
 	}
-	if zipCT == "" {
-		return result.Success("crontab not found in zip file (skipped)")
-	}
+
 	curCT := getCurrentCrontab()
+	if zipCT == "" {
+		if curCT != "" {
+			return result.NewUnchanged("crontab not available in zip file (current crontab left UNCHANGED)")
+		}
+		return result.NewUnchanged("crontab not available in zip file")
+	}
 	return restoreCrontab(curCT, zipCT)
 }
 
@@ -164,15 +167,20 @@ func getCrontabInZip(zip zipfile.ZipFile) (string, error) {
 
 func restoreCrontab(old, new string) result.Result {
 	if old == new {
-		return result.Success("Crontab already up to date")
+		return result.NewUnchanged("crontab is already up to date")
 	}
 
 	cmd := exec.Command("/usr/bin/crontab", "-")
-	return misc.RunCmdStdIn("crontab", new, cmd)
+	res := misc.RunCmdStdIn("crontab", new, cmd)
+	if res.IsSuccess() {
+		return result.NewUpdated("User crontab restored")
+	} else {
+		return result.NewError("User crontab revert failed")
+	}
 }
 
 func (src CrontabSource) Describe() {
-	result.Describe("crontab", "User crontab will be stored into crontab")
+	result.Describe("crontab", "user crontab will be stored into crontab")
 }
 
 /* =========== */
@@ -187,11 +195,11 @@ func (src FstabSource) Backup(writer *zip.Writer) result.Result {
 }
 
 func (src FstabSource) Restore(zip zipfile.ZipFile) result.Result {
-	return result.Success("fstab will NOT be restored (You are not root!)")
+	return result.NewInfo("fstab will NOT be restored (You are not root!)")
 }
 
 func (src FstabSource) Describe() {
-	result.Describe("fstab", "System fstab will be stored into fstab")
+	result.Describe("fstab", "system fstab will be stored into fstab")
 }
 
 /* ===== */
@@ -203,18 +211,18 @@ type LsblkSource struct {
 
 func (src LsblkSource) Backup(writer *zip.Writer) result.Result {
 	if out, err := exec.Command("/bin/lsblk", "-o", "NAME,FSTYPE,SIZE,LABEL,UUID,MOUNTPOINT").Output(); err != nil {
-		return result.Failure("lsblk info not available: " + err.Error())
+		return result.NewError("lsblk info not available: " + err.Error())
 	} else {
 		return ProcessBytes("lsblk", "system/lsblk", out, writer)
 	}
 }
 
 func (src LsblkSource) Restore(zip zipfile.ZipFile) result.Result {
-	return result.Success("lsblk will NOT be restored (it's only for information purpose)")
+	return result.NewInfo("lsblk will NOT be restored (it's only for information purpose)")
 }
 
 func (src LsblkSource) Describe() {
-	result.Describe("lsblk", "List of all block mount points (partition table)")
+	result.Describe("lsblk", "list of all block mount points (partition table)")
 }
 
 /* ========== */
@@ -225,29 +233,49 @@ type XfceSource struct {
 }
 
 func (src XfceSource) Backup(writer *zip.Writer) result.Result {
-	if result := ProcessDir("~/.config/xfce4/panel", "xfce4/panel", writer); !result.IsSuccess() {
-		return result
+	allskipped := true
+
+	if res := ProcessDir("~/.config/xfce4/panel", "xfce4/panel", writer); !res.IsSuccess() {
+		return res
+	} else {
+		allskipped = allskipped && res.IsUnchanged()
 	}
-	if result := ProcessFile("~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml", "xfce4/xfce4-panel.xml", writer); !result.IsSuccess() {
-		return result
+
+	if res := ProcessFile("~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml", "xfce4/xfce4-panel.xml", writer); !res.IsSuccess() {
+		return res
+	} else {
+		allskipped = allskipped && res.IsUnchanged()
 	}
-	return result.Success("Xfce configuration added")
+
+	if allskipped {
+		return result.NewUnchanged("Xfce configuration is NOT available")
+	} else {
+		return result.NewUpdated("Xfce configuration added")
+	}
 }
 
 func (src XfceSource) Restore(zip zipfile.ZipFile) result.Result {
+	allskipped := true
 
 	files := zip.FilesStartingWith("xfce4/panel")
-	if result := copyFilesToFolder(files, "~/.config/xfce4/panel"); !result.IsSuccess() {
-		return result
+	if res := copyFilesToFolder(files, "xfce4/panel", "~/.config/xfce4/panel"); !res.IsSuccess() {
+		return res
+	} else {
+		allskipped = allskipped && res.IsUnchanged()
 	}
 
 	if zip.HasFile("xfce4/xfce4-panel.xml") {
 		if res := zip.GetFile("xfce4/xfce4-panel.xml").Write("~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml"); !res.IsSuccess() {
-			return result.Failure("xfce4/xfce4-panel.xml update failed")
+			return result.NewError("xfce4/xfce4-panel.xml update failed")
+		} else {
+			allskipped = allskipped && res.IsUnchanged()
 		}
 	}
 
-	return result.Success("Xfce config restored")
+	if allskipped {
+		return result.NewUnchanged("Xfce config already up to date")
+	}
+	return result.NewUpdated("Xfce config restored")
 }
 
 func (src XfceSource) Describe() {
@@ -258,17 +286,27 @@ func (src XfceSource) Describe() {
 /* COMMON / INTERNAL */
 /* ================= */
 
-func copyFilesToFolder(files []zipfile.ZipElement, destinationPath string) result.Result {
+func copyFilesToFolder(files []zipfile.ZipElement, zippath, destinationPath string) result.Result {
 	if len(files) == 0 {
-		return result.New(true, "No files to restore to "+destinationPath)
+		return result.NewUnchanged("No file to restore to " + destinationPath)
 	}
 
 	var inError []string
+	skipped := 0
 	for _, file := range files {
 		if file.IsValid() {
-			dst := strings.TrimSuffix(destinationPath, "/") + file.Name()[strings.Index(file.Name(), "/"):]
-			if result := file.Write(dst); !result.IsSuccess() {
+			if !strings.HasPrefix(file.Name(), zippath) {
 				inError = append(inError, file.Name())
+			} else {
+				dst := strings.TrimSuffix(destinationPath, "/") + "/" + strings.TrimPrefix(strings.TrimPrefix(file.Name(), zippath), "/")
+				res := file.Write(dst)
+				if !res.IsSuccess() {
+					inError = append(inError, file.Name())
+				} else {
+					if res.IsUnchanged() {
+						skipped++
+					}
+				}
 			}
 		} else {
 			inError = append(inError, file.Name())
@@ -276,8 +314,24 @@ func copyFilesToFolder(files []zipfile.ZipElement, destinationPath string) resul
 	}
 
 	if len(inError) == 0 {
-		return result.Success(strconv.Itoa(len(files)) + " files written to " + destinationPath)
+		if len(files) == skipped {
+			return result.NewUnchanged(fileString(len(files)) + " with already the expected content into " + destinationPath)
+		} else if skipped == 0 {
+			return result.NewUpdated(fileString(len(files)) + " written to " + destinationPath)
+		} else {
+			return result.NewUpdated(fileString(len(files)-skipped) + " written to " + destinationPath + " (" + fileString(skipped) + " with already the expected content)")
+		}
 	}
 
-	return result.Failure(strconv.Itoa(len(inError)) + " files in error : " + strings.Join(inError, ","))
+	return result.NewError(fileString(len(inError)) + " in error : " + strings.Join(inError, ","))
+}
+
+func fileString(nb int) string {
+	if nb == 0 {
+		return "no file"
+	}
+	if nb == 1 {
+		return "1 file"
+	}
+	return strconv.Itoa(nb) + " files"
 }

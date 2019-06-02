@@ -35,12 +35,12 @@ func ProcessDirFiltered(dirPath, dstName string, matcher FileMatcher, writer *zi
 	dirName := strings.Replace(dirPath, filesystem.HomeDir(), "~", 1)
 
 	if exists, err := filesystem.FolderExists(dirPath); err == nil && !exists {
-		return result.New(true, dirName+" does NOT exists (skipped)")
+		return result.NewUnchanged(dirName + " does NOT exists")
 	}
 
 	files, err := parseDir(dirPath, dstName)
 	if err != nil {
-		return result.New(false, err.Error())
+		return result.NewError(err.Error())
 	}
 
 	var filtered []srcdst
@@ -100,9 +100,12 @@ func addFiles(dirName string, files []srcdst, writer *zip.Writer) result.Result 
 	}
 
 	if failures == 0 {
-		return result.New(true, strconv.Itoa(success)+" files added from "+dirName)
+		if success == 0 {
+			return result.NewUnchanged("NO files available into " + dirName)
+		}
+		return result.NewUpdated(strconv.Itoa(success) + " files added from " + dirName)
 	} else {
-		return result.New(false, strconv.Itoa(failures)+" failures while adding files from "+dirName)
+		return result.NewError(strconv.Itoa(failures) + " failures while adding files from " + dirName)
 	}
 }
 
@@ -111,18 +114,18 @@ func ProcessFile(filePath, dstName string, writer *zip.Writer) result.Result {
 	fileName := strings.Replace(filePath, filesystem.HomeDir(), "~", 1)
 
 	// Assert file exists
-	exists, err1 := filesystem.FileExists(filePath)
+	exists, err1 := filesystem.RegularFileExists(filePath)
 	if err1 != nil {
-		return result.New(false, err1.Error())
+		return result.NewError(err1.Error())
 	}
 	if !exists {
-		return result.New(true, fileName+" does NOT exists (not added)")
+		return result.NewUnchanged(fileName + " does NOT exists (not added)")
 	}
 
 	// Read file content
 	content, err2 := ioutil.ReadFile(filePath)
 	if err2 != nil {
-		return result.New(false, fileName+" is not readable")
+		return result.NewError(fileName + " is not readable")
 	}
 
 	return ProcessBytes(fileName, dstName, content, writer)
@@ -132,14 +135,14 @@ func ProcessBytes(displayName, dstName string, content []byte, writer *zip.Write
 	// Create entry
 	f, err3 := writer.Create(dstName)
 	if err3 != nil {
-		return result.New(false, err3.Error())
+		return result.NewError(err3.Error())
 	}
 
 	// Write file content
 	_, err4 := f.Write(content)
 	if err4 != nil {
-		return result.New(false, displayName+" could NOT be written into the archive")
+		return result.NewError(displayName + " could NOT be written into the archive")
 	}
 
-	return result.New(true, displayName+" added")
+	return result.NewUpdated(displayName + " added")
 }
