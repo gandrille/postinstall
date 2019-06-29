@@ -10,7 +10,7 @@ import (
 	"github.com/gandrille/go-commons/filesystem"
 )
 
-//go:generate go-bindata -pkg $GOPACKAGE -o assets.go resources/ resources/profils resources/zim-simple-web-template resources/zim-simple-web-template/SimpleWeb
+//go:generate go-bindata -pkg $GOPACKAGE -o assets.go resources/ resources/profils resources/zim-simple-web-template resources/zim-simple-web-template/SimpleWeb resources/zim-simple-web-template/SimpleWeb/Roboto
 
 // AssetAsString gets an asset and convert it into a string
 // If an error occurs (ie not found), exit(1)

@@ -1,38 +1,38 @@
-#--------------------------------------------
-# Valid commands
-# - apt-update
-# - apt-upgrade
-# - apt-autoremove
-# - apt-install <packages-names>
-# - fuse-conf
-# - sym-link <existing> <alias>
-# - ini-file <file> <section> <key> <value>
-# - deb-conf <package> <key> <type> <value>
-#--------------------------------------------
+##--------------------------------------------
+## Valid commands
+## - apt-update
+## - apt-upgrade
+## - apt-autoremove
+## - apt-install <packages-names>
+## - sym-link <existing> <alias>
+## - ini-file <file> <section> <key> <value>
+## - deb-conf <package> <key> <type> <value>
+## - configure-fuse
+## - configure-timezone <timezone>
+## - configure-systemd-timesyncd <ntp-server>
+## - configure-systemd-logind
+##--------------------------------------------
 ## Lines starting with two hash signs are comments which are not printed on CLI
 
 # presenter
-apt-install disper
 apt-install pdf-presenter-console
 
 # softwares
 apt-install libreoffice
+apt-install libreoffice-style-oxygen
 apt-install myspell-fr
-apt-install focuswriter
 apt-install inkscape
-apt-install gimp
 apt-install dia
-apt-install pinta
 apt-install homebank
-apt-install keepassx
 apt-install zim
 apt-install filezilla
+apt-install rdesktop
 
 deb-conf wireshark-common wireshark-common/install-setuid boolean true
 apt-install wireshark
 
-apt-install rdesktop
-apt-install bookletimposer
+apt-install keepassxc
+apt-install pinta
 
 # audio & video
 apt-install shotwell
@@ -40,8 +40,9 @@ apt-install audacity
 apt-install vlc
 apt-install openshot
 
-## ===============================================================
-## The following packages are installed by default on XUbunt 18.04
+## ================================================================
+## The following packages are installed by default on XUbuntu 20.04
 ## and are not needed anymore
+## apt-install gimp
 ## apt-install numlockx
-## ===============================================================
+## ================================================================

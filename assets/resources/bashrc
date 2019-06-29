@@ -1,7 +1,7 @@
 if [ -f $HOME/.bashrc-common ]; then
-	. $HOME/.bashrc-common
+  . $HOME/.bashrc-common
 fi
 
 if [ -f $HOME/.bashrc-perso ]; then
-	. $HOME/.bashrc-perso
+  . $HOME/.bashrc-perso
 fi

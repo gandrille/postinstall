@@ -1,16 +1,24 @@
-#--------------------------------------------
-# Valid commands
-# - apt-update
-# - apt-upgrade
-# - apt-autoremove
-# - apt-install <packages-names>
-# - fuse-conf
-# - sym-link <existing> <alias>
-# - ini-file <file> <section> <key> <value>
-# - deb-conf <package> <key> <type> <value>
-#--------------------------------------------
+##--------------------------------------------
+## Valid commands
+## - apt-update
+## - apt-upgrade
+## - apt-autoremove
+## - apt-install <packages-names>
+## - sym-link <existing> <alias>
+## - ini-file <file> <section> <key> <value>
+## - deb-conf <package> <key> <type> <value>
+## - configure-fuse
+## - configure-timezone <timezone>
+## - configure-systemd-timesyncd <ntp-server>
+## - configure-systemd-logind
+##--------------------------------------------
 ## Lines starting with two hash signs are comments which are not printed on CLI
 
-fuse-conf
-### Updates the login screen background image (when using LightDM login screen)
-ini-file /etc/lightdm/lightdm-gtk-greeter.conf greeter background /usr/share/xfce4/backdrops/xubuntu-yakkety.png
+configure-fuse
+configure-timezone Europe/Paris
+configure-systemd-timesyncd ntp.unice.fr
+
+# Gnome screensaver / locker
+# NOTE: gnome-screensaver is already installed with gnome-applets package
+apt-install gnome-screensaver
+configure-systemd-logind

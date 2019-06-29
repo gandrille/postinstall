@@ -1,14 +1,17 @@
-#--------------------------------------------
-# Valid commands
-# - apt-update
-# - apt-upgrade
-# - apt-autoremove
-# - apt-install <packages-names>
-# - fuse-conf
-# - sym-link <existing> <alias>
-# - ini-file <file> <section> <key> <value>
-# - deb-conf <package> <key> <type> <value>
-#--------------------------------------------
+##--------------------------------------------
+## Valid commands
+## - apt-update
+## - apt-upgrade
+## - apt-autoremove
+## - apt-install <packages-names>
+## - sym-link <existing> <alias>
+## - ini-file <file> <section> <key> <value>
+## - deb-conf <package> <key> <type> <value>
+## - configure-fuse
+## - configure-timezone <timezone>
+## - configure-systemd-timesyncd <ntp-server>
+## - configure-systemd-logind
+##--------------------------------------------
 ## Lines starting with two hash signs are comments which are not printed on CLI
 
 apt-install openssh-server
@@ -17,6 +20,9 @@ apt-install samba
 apt-install smbclient 
 apt-install cifs-utils
 apt-install gparted
+
+deb-conf macchanger macchanger/automatically_run boolean false
+apt-install macchanger
 
 # iptables-persistent
 deb-conf iptables-persistent iptables-persistent/autosave_v4 boolean false

@@ -8,8 +8,8 @@ import (
 	"github.com/gandrille/go-commons/result"
 	"github.com/gandrille/postinstall/system"
 
-	"github.com/gandrille/postinstall/user/backup"
-	"github.com/gandrille/postinstall/user/initialize"
+	"github.com/gandrille/postinstall/backup"
+	"github.com/gandrille/postinstall/initialize"
 )
 
 // =========================================
@@ -17,7 +17,7 @@ import (
 // TODO EDIT version number before releasing
 // =========================================
 func version() string {
-	return "v1.0"
+	return "v1.2"
 }
 
 func main() {
@@ -30,7 +30,6 @@ func main() {
 	}
 
 	switch args[0] {
-
 	// General infos
 	case "help":
 		usage()
