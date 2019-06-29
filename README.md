@@ -60,3 +60,9 @@ This project is released under the
 * [github.com/fatih/color](https://github.com/fatih/color/): [MIT](https://github.com/fatih/color/blob/master/LICENSE.md)
 * [github.com/go-bindata/go-bindata](https://github.com/go-bindata/go-bindata/): [CC0](https://github.com/go-bindata/go-bindata/blob/master/LICENSE)
 * [github.com/gandrille/go-commons](https://github.com/gandrille/go-commons): [Apache 2.0 license](https://github.com/gandrille/go-commons/blob/master/LICENSE.txt)
+
+
+## TODO list
+
+**System**
+* configure `/etc/systemd/timesyncd.conf` and assert `systemd-timesyncd.service` is started
