@@ -3,18 +3,9 @@
 
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
-# History config
 
-# ================
 # User dirs config
-# ================
-
 test -f ${XDG_CONFIG_HOME:-~/.config}/user-dirs.dirs && source ${XDG_CONFIG_HOME:-~/.config}/user-dirs.dirs
-
-dataHome=${XDG_DATA_HOME:-$HOME/.local/share}
-configHome=${XDG_CONFIG_HOME:-$HOME/.config}
-cacheHome=${XDG_CACHE_HOME:-$HOME/.cache}
-
 
 # =================
 # Utility Functions
@@ -73,20 +64,12 @@ function testFongarnand() {
   echo "Prochaine vente Fongarnand le $date"
 }
 
-HISTCONTROL=ignoreboth
-shopt -s histappend
-HISTSIZE=1000
-HISTFILESIZE=2000
-HISTIGNORE='ls:ls -la:pwd:history'
-
-
-# check the window size after each command and, if necessary,
-# update the values of LINES and COLUMNS.
-shopt -s checkwinsize
-
 # configuration du prompt
-# pour le modifier : http://bashrcgenerator.com/
-PS1="\u \W \\$ "
+# regarder les couleurs : seq 250 | xargs -n 1 -I {} echo -e "\033[0m\033[38;5;{}mnormal{} - \033[1m bold{}"
+# online helper tool : http://bashrcgenerator.com/
+# Basic prompt
+# export PS1="\u \W \\$ "
+export PS1="\[\033[38;5;35m\]\u \[\033[1m\]\[\033[38;5;12m\]\w\[$(tput sgr0)\] \\$ "
 
 # alias
 #unalias $(alias | cut -d ' ' -f 2 | cut -d '=' -f 1)
@@ -124,4 +107,3 @@ PATH=.:$PATH
 # Affichages
 # ==========
 clear
-
