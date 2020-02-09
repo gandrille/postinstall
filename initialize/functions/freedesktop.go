@@ -27,7 +27,7 @@ func (f FreedesktopFunction) Infos() FunctionInfos {
 
 // Run function
 func (f FreedesktopFunction) Run() result.Result {
-	return execute(f.Infos().Title, xdgDirsConfig, desktopFilesConfig)
+	return execute(f.Infos().Title, xdgDirsConfig, assertFolderExists, mailConfig, webConfig)
 }
 
 // ======================================
@@ -73,44 +73,34 @@ func xdgDirsConfig() result.Result {
 // desktop files configuration
 // ===========================
 
-func desktopFilesConfig() result.Result {
+const srcDir = "/usr/share/applications/"
+const dstDir = "~/.local/share/applications/"
 
-	srcDir := "/usr/share/applications/"
-	dstDir := "~/.local/share/applications/"
+func assertFolderExists() result.Result {
+	return filesystem.CreateFolderIfNeeded(dstDir)
+}
 
-	allskipped := true
+func mailConfig() result.Result {
+	name := "Mail"
+	dst := "exo-mail-reader.desktop"
+	icon := "internet-mail"
+	return desktopFilesConfig(name, dst, icon)
+}
 
-	// Assert folder exists
-	if res := filesystem.CreateFolderIfNeeded(dstDir); !res.IsSuccess() {
+func webConfig() result.Result {
+	name := "Web"
+	dst := "exo-web-browser.desktop"
+	icon := "firefox"
+	return desktopFilesConfig(name, dst, icon)
+}
+
+func desktopFilesConfig(name, ficName, icon string) result.Result {
+	srcPath := srcDir + ficName
+	dstPath := dstDir + ficName
+	if res := filesystem.CopyFileWithUpdate(srcPath, dstPath, "Icon=", "Icon="+icon, true); !res.IsSuccess() {
 		return result.NewError(res.Message())
 	} else {
-		allskipped = allskipped && res.IsUnchanged()
-	}
-
-	msg := ""
-	// Mail
-	dstMail := dstDir + "exo-mail-reader.desktop"
-	if res := filesystem.CopyFileWithUpdate(srcDir+"exo-mail-reader.desktop", dstMail, "Icon=", "Icon=internet-mail", true); !res.IsSuccess() {
-		return result.NewError(res.Message())
-	} else {
-		newMsg := "Mail icon: file " + dstMail + " " + strings.ToLower(res.Status().String())
-		msg += newMsg
-		allskipped = allskipped && res.IsUnchanged()
-	}
-
-	// Browser
-	if res := filesystem.CopyFileWithUpdate(srcDir+"exo-web-browser.desktop", dstDir+"exo-web-browser.desktop", "Icon=", "Icon=firefox", true); !res.IsSuccess() {
-		return result.NewError(res.Message())
-	} else {
-		msg += "\n"
-		newMsg := "Browser icon: file " + dstMail + " " + strings.ToLower(res.Status().String())
-		msg += newMsg
-		allskipped = allskipped && res.IsUnchanged()
-	}
-
-	if allskipped {
-		return result.NewUnchanged(msg)
-	} else {
-		return result.NewUpdated(msg)
+		msg := name + " icon: file " + dstPath
+		return result.New(res.Status(), msg)
 	}
 }

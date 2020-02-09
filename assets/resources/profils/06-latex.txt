@@ -1,14 +1,14 @@
-#--------------------------------------------
-# Valid commands
-# - apt-update
-# - apt-upgrade
-# - apt-autoremove
-# - apt-install <packages-names>
-# - fuse-conf
-# - sym-link <existing> <alias>
-# - ini-file <file> <section> <key> <value>
-# - deb-conf <package> <key> <type> <value>
-#--------------------------------------------
+##--------------------------------------------
+## Valid commands
+## - apt-update
+## - apt-upgrade
+## - apt-autoremove
+## - apt-install <packages-names>
+## - fuse-conf
+## - sym-link <existing> <alias>
+## - ini-file <file> <section> <key> <value>
+## - deb-conf <package> <key> <type> <value>
+##--------------------------------------------
 ## Lines starting with two hash signs are comments which are not printed on CLI
 
 apt-install texlive-full

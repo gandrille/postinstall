@@ -14,7 +14,7 @@ Here is the output produced with `postinstall help`
 ```
 General infos
 help                 prints this help
-version              prints version number (v1.0)
+version              prints version number (v1.1)
 
 System install eases the installation of important packages
 system-install-info  describes what the installer does
@@ -45,6 +45,8 @@ go install src/github.com/gandrille/postinstall/postinstall.go
 
 ## Changelog
 
+**[v1.1](../../releases/tag/v1.1)** Pre-release BEFORE 20.04 LTS (Focal Fossa)
+
 **[v1.0](../../releases/tag/v1.0)** Designed for XUbuntu 18.04 LTS (Bionic Beaver)
 
 **[v0.9](../../releases/tag/v0.9)** Pre-release
@@ -66,3 +68,4 @@ This project is released under the
 
 **System**
 * configure `/etc/systemd/timesyncd.conf` and assert `systemd-timesyncd.service` is started
+* auto-updates configuration

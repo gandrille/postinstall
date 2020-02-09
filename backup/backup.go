@@ -5,11 +5,14 @@ import (
 	"bytes"
 	"fmt"
 	"os"
+	"strconv"
+	"strings"
 	"time"
 
 	"github.com/gandrille/go-commons/env"
 	"github.com/gandrille/go-commons/filesystem"
 	"github.com/gandrille/go-commons/result"
+	"github.com/gandrille/go-commons/strpair"
 	"github.com/gandrille/go-commons/zipfile"
 )
 
@@ -73,21 +76,60 @@ func backupAll(writer *zip.Writer) result.Set {
 	var results result.Set
 	sources := getSources()
 
+	kv := make([]strpair.StrPair, 0)
 	for _, src := range sources {
-		r := src.Backup(writer)
+		r := src.Backup(writer, &kv)
 		results.Add(r)
 	}
+	results.Add(writeStore(writer, kv))
 
 	return results
+}
+
+func writeStore(writer *zip.Writer, store []strpair.StrPair) result.Result {
+	content := "# Key Value Store content\n"
+	for _, pair := range store {
+		content += pair.Str1() + "=" + pair.Str2() + "\n"
+	}
+	return ProcessBytes("Key/Value store", "kvstore.txt", []byte(content), writer)
 }
 
 func restoreAll(zip zipfile.ZipFile) result.Set {
 	var results result.Set
 	sources := getSources()
 
+	kv := make([]strpair.StrPair, 0)
+	results.Add(readStore(zip, &kv))
+
 	for _, src := range sources {
-		results.Add(src.Restore(zip))
+		results.Add(src.Restore(zip, kv))
 	}
 
 	return results
+}
+
+func readStore(zip zipfile.ZipFile, store *[]strpair.StrPair) result.Result {
+	file := zip.GetFile("kvstore.txt")
+	if file == nil {
+		return result.NewInfo("No Key/Value store available")
+	}
+
+	content, err := file.StringContent()
+	if err != nil {
+		return result.NewError("Can't read Key/Value store: " + err.Error())
+	}
+
+	for _, line := range strings.Split(content, "\n") {
+		if len(line) != 0 && !strings.HasPrefix(line, "#") {
+			idx := strings.Index(line, "=")
+			if idx == -1 {
+				return result.NewError("'=' separator not found in line " + line)
+			}
+			key := line[:idx]
+			val := line[idx+1:]
+			*store = append(*store, strpair.New(key, val))
+		}
+	}
+
+	return result.NewInfo("Key/Value store loaded with " + strconv.Itoa(len(*store)) + " pair(s)")
 }

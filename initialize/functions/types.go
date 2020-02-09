@@ -2,6 +2,7 @@ package functions
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/gandrille/go-commons/result"
 )
@@ -31,14 +32,23 @@ type Executor func() result.Result
 func execute(title string, executors ...Executor) result.Result {
 	onlySkip := true
 	for _, exe := range executors {
-		if res := exe(); !res.IsSuccess() {
-			result.PrintRed(res.Message())
-			return result.NewError(title + " " + res.Message())
+
+		res := exe()
+
+		msg := res.Message()
+		if strings.Contains(msg, "\n") {
+			msg = "\n" + msg
+			msg = strings.ReplaceAll(msg, "\n", "\n* ")
+		}
+
+		if !res.IsSuccess() {
+			result.PrintRed(msg)
+			return result.NewError(title + " " + msg)
 		} else {
 			if !res.IsUnchanged() {
 				onlySkip = false
 			}
-			fmt.Println(res.Message())
+			fmt.Println("[" + strings.ToUpper(res.Status().String()) + "] " + msg)
 		}
 	}
 
@@ -47,5 +57,4 @@ func execute(title string, executors ...Executor) result.Result {
 	} else {
 		return result.NewUpdated(title)
 	}
-
 }

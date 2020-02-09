@@ -22,7 +22,6 @@ func (f XfceDesktopFunction) Infos() FunctionInfos {
 		ShortDescription: "Updates Xfce desktop configuration",
 		LongDescription: `* Workspace image background
 * Workspace image background style
-* Workspace count
 * Window manager theme
 * Apparence / Style (colors)
 * Apparence / Icon set
@@ -41,38 +40,33 @@ func (f XfceDesktopFunction) Run() result.Result {
 	// Workspace image background
 	f2 := func() result.Result { return setBackgroundStyle("5" /* zoom */) }
 
-	// Workspace count
-	f3 := func() result.Result {
-		return env.SetXfconfProperty("xfwm4", "/general/workspace_count", "3").StandardizeMessage("Number of workspaces", "3")
-	}
-
 	// Window manager theme
-	f4 := func() result.Result {
+	f3 := func() result.Result {
 		return env.SetXfconfProperty("xfwm4", "/general/theme", "Arc").StandardizeMessage("Window manager theme", "Arc")
 	}
 
 	// Apparence / Style (colors)
-	f5 := func() result.Result {
+	f4 := func() result.Result {
 		return env.SetXfconfProperty("xsettings", "/Net/ThemeName", "Arc").StandardizeMessage("Apparence / Style (colors)", "Arc")
 	}
 
 	// Apparence / Icon set
-	f6 := func() result.Result {
+	f5 := func() result.Result {
 		return env.SetXfconfProperty("xsettings", "/Net/IconThemeName", "deepin").StandardizeMessage("Apparence / Icon set", "Arc")
 	}
 
 	// Apparence / Icon set
-	f7 := func() result.Result {
+	f6 := func() result.Result {
 		return env.SetXfconfProperty("xfce4-keyboard-shortcuts", "/commands/custom/Print", "xfce4-screenshooter").StandardizeMessage("<print screen> keyboard shortcut", "xfce4-screenshooter")
 	}
 
 	// Thunar
-	f8 := func() result.Result { return configureXfceThunar() }
+	f7 := func() result.Result { return configureXfceThunar() }
 
 	// Xfce Terminal scrolling and Tango color theme
-	f9 := func() result.Result { return configureXfceTerminal() }
+	f8 := func() result.Result { return configureXfceTerminal() }
 
-	return execute(f.Infos().Title, f1, f2, f3, f4, f5, f6, f7, f8, f9)
+	return execute(f.Infos().Title, f1, f2, f3, f4, f5, f6, f7, f8)
 }
 
 func setBackgroundImage(image string) result.Result {
@@ -146,7 +140,7 @@ func setBackgroundStyle(style string) result.Result {
 
 func computeResult(nb, nbSkipped, nbUpdated int, name, value, defaultMessage string) result.Result {
 	if nbSkipped == nb {
-		return result.NewUnchanged(name + " already set in all " + strconv.Itoa(nbSkipped) + " props with value " + value + " (unchanged)")
+		return result.NewUnchanged(name + " already set in all " + strconv.Itoa(nbSkipped) + " props with value " + value)
 	} else if nbUpdated == nb {
 		return result.NewUpdated(name + " updated in " + strconv.Itoa(nbUpdated) + " props with value " + value)
 	} else if nbUpdated+nbSkipped == nb {
@@ -164,7 +158,7 @@ func configureXfceThunar() result.Result {
 	if updated {
 		return result.NewUpdated("Thunar backspace shortcut updated to move to parent folder (run 'thunar -q' before starting using it)")
 	} else {
-		return result.NewUnchanged("Thunar backspace shortcut already set (unchanged)")
+		return result.NewUnchanged("Thunar backspace shortcut already set")
 	}
 }
 
@@ -181,10 +175,8 @@ func configureXfceTerminal() result.Result {
 		strpair.New("ColorSelectionUseDefault", "FALSE"),
 		strpair.New("ColorCursor", "#0f4999"),
 		strpair.New("ColorBold", "#ffffff"),
-		strpair.New("ColorBoldUseDefault", "TRUE"),
 		strpair.New("TabActivityColor", "#0f4999"),
-		strpair.New("ScrollingUnlimited", "FALSE"),
-		strpair.New("ScrollingLines", "15000"),
+		strpair.New("ScrollingLines", "30000"),
 	}
 
 	allskipped := true
@@ -197,7 +189,7 @@ func configureXfceTerminal() result.Result {
 	}
 
 	if allskipped {
-		return result.NewUnchanged("Xfce terminal config is already up to date (unchanged)")
+		return result.NewUnchanged("Xfce terminal config is already up to date")
 	} else {
 		return result.NewUpdated("Xfce terminal config updated")
 	}

@@ -2,20 +2,23 @@ package backup
 
 import (
 	"archive/zip"
+	"errors"
 	"os/exec"
 	"strconv"
 	"strings"
 
+	"github.com/gandrille/go-commons/env"
 	"github.com/gandrille/go-commons/misc"
 	"github.com/gandrille/go-commons/result"
+	"github.com/gandrille/go-commons/strpair"
 	"github.com/gandrille/go-commons/zipfile"
 )
 
 // A source is "something" which can be backup and restore.
 // It also has a describe function.
 type source interface {
-	Backup(writer *zip.Writer) result.Result
-	Restore(zip zipfile.ZipFile) result.Result
+	Backup(writer *zip.Writer, kvstore *[]strpair.StrPair) result.Result
+	Restore(zip zipfile.ZipFile, store []strpair.StrPair) result.Result
 	Describe()
 }
 
@@ -23,6 +26,7 @@ func getSources() []source {
 	var sources []source
 
 	sources = append(sources, FileSource{"~/.netrc", "netrc"})
+	sources = append(sources, FileSource{"~/.bashrc-perso", "bashrc-perso"})
 	sources = append(sources, FileSource{"~/.gitconfig", "gitconfig"})
 	sources = append(sources, FileSource{"~/.m2/settings.xml", "settings.xml"})
 
@@ -36,10 +40,21 @@ func getSources() []source {
 	sources = append(sources, UnisonSource{})
 	sources = append(sources, CrontabSource{})
 	sources = append(sources, XfceSource{})
+	sources = append(sources, XfcePropertySource{})
+
 	sources = append(sources, FstabSource{})
 	sources = append(sources, LsblkSource{})
 
 	return sources
+}
+
+func getValue(store []strpair.StrPair, key string) (string, error) {
+	for _, pair := range store {
+		if pair.Str1() == key {
+			return pair.Str2(), nil
+		}
+	}
+	return "", errors.New("Pair with key " + key + " not found")
 }
 
 /* ========== */
@@ -51,11 +66,11 @@ type FileSource struct {
 	zipPath  string
 }
 
-func (src FileSource) Backup(writer *zip.Writer) result.Result {
+func (src FileSource) Backup(writer *zip.Writer, kvstore *[]strpair.StrPair) result.Result {
 	return ProcessFile(src.filePath, src.zipPath, writer)
 }
 
-func (src FileSource) Restore(zip zipfile.ZipFile) result.Result {
+func (src FileSource) Restore(zip zipfile.ZipFile, store []strpair.StrPair) result.Result {
 	if zip.HasFile(src.zipPath) {
 		return zip.GetFile(src.zipPath).Write(src.filePath)
 	}
@@ -75,11 +90,11 @@ type DirSource struct {
 	zipPath string
 }
 
-func (src DirSource) Backup(writer *zip.Writer) result.Result {
+func (src DirSource) Backup(writer *zip.Writer, kvstore *[]strpair.StrPair) result.Result {
 	return ProcessDir(src.dirPath, src.zipPath, writer)
 }
 
-func (src DirSource) Restore(zip zipfile.ZipFile) result.Result {
+func (src DirSource) Restore(zip zipfile.ZipFile, store []strpair.StrPair) result.Result {
 	files := zip.FilesStartingWith(src.zipPath)
 	return copyFilesToFolder(files, src.zipPath, src.dirPath)
 }
@@ -103,11 +118,11 @@ func (f matchUnison) Match(element srcdst) bool {
 	return strings.HasSuffix(element.src, ".prf")
 }
 
-func (src UnisonSource) Backup(writer *zip.Writer) result.Result {
+func (src UnisonSource) Backup(writer *zip.Writer, kvstore *[]strpair.StrPair) result.Result {
 	return ProcessDirFiltered("~/.unison", "unison", matchUnison{}, writer)
 }
 
-func (src UnisonSource) Restore(zip zipfile.ZipFile) result.Result {
+func (src UnisonSource) Restore(zip zipfile.ZipFile, store []strpair.StrPair) result.Result {
 	// we have backup only the necessary... so we can restore everything
 	files := zip.FilesStartingWith("unison")
 	return copyFilesToFolder(files, "unison", "~/.unison")
@@ -124,7 +139,7 @@ func (src UnisonSource) Describe() {
 type CrontabSource struct {
 }
 
-func (src CrontabSource) Backup(writer *zip.Writer) result.Result {
+func (src CrontabSource) Backup(writer *zip.Writer, kvstore *[]strpair.StrPair) result.Result {
 	ct := getCurrentCrontab()
 
 	if ct == "" {
@@ -133,7 +148,7 @@ func (src CrontabSource) Backup(writer *zip.Writer) result.Result {
 	return ProcessBytes("crontab", "crontab", []byte(ct), writer)
 }
 
-func (src CrontabSource) Restore(zip zipfile.ZipFile) result.Result {
+func (src CrontabSource) Restore(zip zipfile.ZipFile, store []strpair.StrPair) result.Result {
 	zipCT, err := getCrontabInZip(zip)
 	if err != nil {
 		return result.NewError(err.Error())
@@ -190,11 +205,11 @@ func (src CrontabSource) Describe() {
 type FstabSource struct {
 }
 
-func (src FstabSource) Backup(writer *zip.Writer) result.Result {
+func (src FstabSource) Backup(writer *zip.Writer, kvstore *[]strpair.StrPair) result.Result {
 	return ProcessFile("/etc/fstab", "system/fstab", writer)
 }
 
-func (src FstabSource) Restore(zip zipfile.ZipFile) result.Result {
+func (src FstabSource) Restore(zip zipfile.ZipFile, store []strpair.StrPair) result.Result {
 	return result.NewInfo("fstab will NOT be restored (You are not root!)")
 }
 
@@ -209,7 +224,7 @@ func (src FstabSource) Describe() {
 type LsblkSource struct {
 }
 
-func (src LsblkSource) Backup(writer *zip.Writer) result.Result {
+func (src LsblkSource) Backup(writer *zip.Writer, kvstore *[]strpair.StrPair) result.Result {
 	if out, err := exec.Command("/bin/lsblk", "-o", "NAME,FSTYPE,SIZE,LABEL,UUID,MOUNTPOINT").Output(); err != nil {
 		return result.NewError("lsblk info not available: " + err.Error())
 	} else {
@@ -217,7 +232,7 @@ func (src LsblkSource) Backup(writer *zip.Writer) result.Result {
 	}
 }
 
-func (src LsblkSource) Restore(zip zipfile.ZipFile) result.Result {
+func (src LsblkSource) Restore(zip zipfile.ZipFile, store []strpair.StrPair) result.Result {
 	return result.NewInfo("lsblk will NOT be restored (it's only for information purpose)")
 }
 
@@ -232,7 +247,7 @@ func (src LsblkSource) Describe() {
 type XfceSource struct {
 }
 
-func (src XfceSource) Backup(writer *zip.Writer) result.Result {
+func (src XfceSource) Backup(writer *zip.Writer, kvstore *[]strpair.StrPair) result.Result {
 	allskipped := true
 
 	if res := ProcessDir("~/.config/xfce4/panel", "xfce4/panel", writer); !res.IsSuccess() {
@@ -254,7 +269,7 @@ func (src XfceSource) Backup(writer *zip.Writer) result.Result {
 	}
 }
 
-func (src XfceSource) Restore(zip zipfile.ZipFile) result.Result {
+func (src XfceSource) Restore(zip zipfile.ZipFile, store []strpair.StrPair) result.Result {
 	allskipped := true
 
 	files := zip.FilesStartingWith("xfce4/panel")
@@ -280,6 +295,38 @@ func (src XfceSource) Restore(zip zipfile.ZipFile) result.Result {
 
 func (src XfceSource) Describe() {
 	result.Describe("Xfce panel", "configuration files will be stored into xfce4")
+}
+
+/* ================== */
+/* XfcePropertySource */
+/* ================== */
+
+type XfcePropertySource struct {
+}
+
+func (src XfcePropertySource) Backup(writer *zip.Writer, kvstore *[]strpair.StrPair) result.Result {
+
+	val, err := env.ReadXfconfProperty("xfwm4", "/general/workspace_count")
+	if err != nil {
+		return result.NewError("Can't read workspace count")
+	}
+	*kvstore = append(*kvstore, strpair.New("workspace_count", val))
+
+	return result.NewUpdated("Xfce Key/Value store properties registered")
+}
+
+func (src XfcePropertySource) Restore(zip zipfile.ZipFile, store []strpair.StrPair) result.Result {
+
+	val, err := getValue(store, "workspace_count")
+	if err != nil {
+		return result.NewUnchanged("No update made")
+	}
+
+	return env.SetXfconfProperty("xfwm4", "/general/workspace_count", val)
+}
+
+func (src XfcePropertySource) Describe() {
+	result.Describe("Xfce properties", "Configuration properties will be added to Key/Value store")
 }
 
 /* ================= */

@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/gandrille/go-commons/result"
-	"github.com/gandrille/postinstall/user/initialize/functions"
+	"github.com/gandrille/postinstall/initialize/functions"
 )
 
 // Run executes all the functions
@@ -46,6 +46,9 @@ func getInitFunctions() []functions.Function {
 	list = append(list, functions.ZimFunction{})
 	list = append(list, functions.MvnSettingsFunction{})
 	list = append(list, functions.BluemanFunction{})
+	list = append(list, functions.SdkManFunction{})
+	list = append(list, functions.SSHFunction{})
+	list = append(list, functions.FirefoxFunction{})
 
 	return list
 }

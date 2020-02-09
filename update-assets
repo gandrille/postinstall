@@ -33,6 +33,9 @@ echo "<<	171   # left quotes"  >> $dirName/assets/resources/zim-symbols.list
 echo ">>	187   # right quotes" >> $dirName/assets/resources/zim-symbols.list
 success "zim symbols.list updated"
 
+# Firefox user config
+wget --quiet -O $dirName/assets/resources/firefox-user.js https://gandrille.github.io/linux-notes/Softs/Firefox/Config/user.js
+
 # generate
 PATH=$PATH:$GOPATH/bin
 go generate -x $GOPATH/src/github.com/gandrille/postinstall/assets/assetsgenerator.go
