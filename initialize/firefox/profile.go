@@ -21,7 +21,7 @@ func CreateProfile() result.Result {
 	}
 
 	if err := exec.Command("firefox", "-silent").Run(); err != nil {
-		return result.NewError("Firefox profile creation failed: " + err.Error())
+		return result.NewError("Firefox profile creation failed: " + err.Error() + " - Please start Firefox once")
 	}
 
 	return result.NewCreated("Firefox profile created")

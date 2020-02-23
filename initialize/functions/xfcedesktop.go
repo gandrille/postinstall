@@ -55,7 +55,7 @@ func (f XfceDesktopFunction) Run() result.Result {
 		return env.SetXfconfProperty("xsettings", "/Net/IconThemeName", "deepin").StandardizeMessage("Apparence / Icon set", "Deepin")
 	}
 
-	// Apparence / Icon set
+	// <<Print>> command
 	f6 := func() result.Result {
 		return env.SetXfconfProperty("xfce4-keyboard-shortcuts", "/commands/custom/Print", "xfce4-screenshooter").StandardizeMessage("<print screen> keyboard shortcut", "xfce4-screenshooter")
 	}

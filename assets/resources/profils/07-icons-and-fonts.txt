@@ -8,9 +8,7 @@
 ## - ini-file <file> <section> <key> <value>
 ## - deb-conf <package> <key> <type> <value>
 ## - configure-fuse
-## - configure-timezone <timezone>
 ## - configure-systemd-timesyncd <ntp-server>
-## - configure-systemd-logind
 ##--------------------------------------------
 ## Lines starting with two hash signs are comments which are not printed on CLI
 
@@ -37,8 +35,8 @@ apt-install fonts-cantarell
 apt-install fonts-font-awesome
 apt-install fonts-lato
 
-## ===============================================================
-## The following packages are installed by default on XUbunt 20.04
+## ================================================================
+## The following packages are installed by default on XUbuntu 20.04
 ## and are not needed anymore
 ## apt-install libreoffice-style-elementary
-## ===============================================================
+## ================================================================

@@ -48,7 +48,6 @@ func getInitFunctions() []functions.Function {
 	list = append(list, functions.SdkManFunction{})
 	list = append(list, functions.SSHFunction{})
 	list = append(list, functions.FirefoxFunction{})
-	list = append(list, functions.ScreensaverAndLockFunction{})
 
 	return list
 }

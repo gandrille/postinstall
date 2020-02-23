@@ -40,9 +40,7 @@ func getProcessors() []processor {
 	list = append(list, inifile{})
 	list = append(list, debconf{})
 	list = append(list, fuse{})
-	list = append(list, timezone{})
 	list = append(list, systemdtimesyncd{})
-	list = append(list, systemdlogind{})
 	return list
 }
 
@@ -241,34 +239,6 @@ func (e fuse) run(args []string) result.Result {
 	}
 }
 
-// ==================
-// timezone processor
-// ==================
-
-type timezone struct {
-}
-
-func (e timezone) key() string {
-	return "configure-timezone"
-}
-
-func (e timezone) describe(args []string) string {
-	return "timezone config: sets the timezone with " + args[0]
-}
-
-func (e timezone) run(args []string) result.Result {
-	res := filesystem.WriteStringFile("/etc/timezone", args[0]+"\n", true)
-
-	if res.IsUnchanged() {
-		return result.NewUnchanged("Timezone is already " + args[0])
-	}
-	if res.IsUpdated() || res.IsCreated() {
-		return result.NewUpdated("Timezone is now " + args[0])
-	}
-
-	return result.NewError("Timezone update failed : " + res.Message())
-}
-
 // ==========================
 // systemdtimesyncd processor
 // ==========================
@@ -294,7 +264,7 @@ func (e systemdtimesyncd) run(args []string) result.Result {
 	if err1 != nil {
 		return result.NewError(e.describe(args) + " " + err1.Error())
 	}
-	msg := ""
+	msg := "NTP "
 	if fileupdated {
 		msg = "configuration updated, "
 		updated = true
@@ -345,48 +315,6 @@ func (e systemdtimesyncd) run(args []string) result.Result {
 	return result.NewUnchanged(msg)
 }
 
-// ==================================
-// configure-systemd-logind processor
-// ==================================
-
-type systemdlogind struct {
-}
-
-func (e systemdlogind) key() string {
-	return "configure-systemd-logind"
-}
-
-func (e systemdlogind) describe(args []string) string {
-	return "Disables lid switch management with systemd logind"
-}
-
-func (e systemdlogind) run(args []string) result.Result {
-	path := "/etc/systemd/logind.conf"
-	old := "#HandleLidSwitch=suspend"
-	new := "HandleLidSwitch=ignore"
-
-	// Note to myself
-	// $old may or may not be present before calling this method
-	// Thats why this method looks a bit over complicated
-
-	// is update needed
-	contains, err := filesystem.StringFileContains(path, new)
-	if err != nil {
-		return result.NewError(e.describe(args) + " " + err.Error())
-	}
-	if contains {
-		return result.NewUnchanged(e.describe(args))
-	}
-
-	// update needed
-	res := filesystem.UpdateLineInFile(path, old, new, true)
-	if res.IsError() {
-		return result.NewError(e.describe(args) + " " + res.Message())
-	}
-
-	return result.NewUpdated(e.describe(args))
-}
-
 // =========
 // Internals
 // =========
@@ -434,6 +362,7 @@ func isInstalled(packageName string) (bool, error) {
 		}
 	} else {
 		output := string(out)
+		// TODO next line is probably a bug...
 		if output == "ii" || output == "ii " {
 			return true, nil
 		} else {

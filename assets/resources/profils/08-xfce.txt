@@ -8,9 +8,7 @@
 ## - ini-file <file> <section> <key> <value>
 ## - deb-conf <package> <key> <type> <value>
 ## - configure-fuse
-## - configure-timezone <timezone>
 ## - configure-systemd-timesyncd <ntp-server>
-## - configure-systemd-logind
 ##--------------------------------------------
 ## Lines starting with two hash signs are comments which are not printed on CLI
 
@@ -35,13 +33,13 @@ apt-install system-config-printer-gnome
 apt-install xubuntu-restricted-addons
 apt-install thunderbird-gnome-support
 
-## ===============================================================
-## The following packages are installed by default on XUbunt 18.04
+## ================================================================
+## The following packages are installed by default on XUbuntu 18.04
 ## dpkg -l 'xfce4-*-plugin*' 
 ## apt-install xfce4-pulseaudio-plugin
 ## apt-install xfce4-power-manager-plugins
 ##
-## The following packages are installed by default on XUbunt 20.04
+## The following packages are installed by default on XUbuntu 20.04
 ## and are not needed anymore
 ## apt-install gnome-font-viewer
-## ===============================================================
+## ================================================================

@@ -8,9 +8,7 @@
 ## - ini-file <file> <section> <key> <value>
 ## - deb-conf <package> <key> <type> <value>
 ## - configure-fuse
-## - configure-timezone <timezone>
 ## - configure-systemd-timesyncd <ntp-server>
-## - configure-systemd-logind
 ##--------------------------------------------
 ## Lines starting with two hash signs are comments which are not printed on CLI
 
@@ -28,9 +26,9 @@ apt-install unrar
 apt-install vim
 apt-install jq
 apt-install shellcheck
+apt-install golang
 apt-install libboost-all-dev
 apt-install apache2-utils
-apt-install subversion
 apt-install git
 apt-install concalc
 apt-install inotify-tools
@@ -57,8 +55,8 @@ apt-install libxml2-utils
 apt-install fop
 apt-install libsaxonb-java
 
-## ===============================================================
-## The following packages are installed by default on XUbunt 20.04
+## ================================================================
+## The following packages are installed by default on XUbuntu 20.04
 ## and are not needed anymore
 ## apt-install g++
 ## apt-install tree
@@ -69,4 +67,4 @@ apt-install libsaxonb-java
 ## apt-install python2
 ## apt-install python3
 ## apt-install inxi
-## ===============================================================
+## ================================================================

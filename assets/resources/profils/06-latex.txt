@@ -8,9 +8,7 @@
 ## - ini-file <file> <section> <key> <value>
 ## - deb-conf <package> <key> <type> <value>
 ## - configure-fuse
-## - configure-timezone <timezone>
 ## - configure-systemd-timesyncd <ntp-server>
-## - configure-systemd-logind
 ##--------------------------------------------
 ## Lines starting with two hash signs are comments which are not printed on CLI
 
