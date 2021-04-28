@@ -18,6 +18,7 @@ apt-install samba
 apt-install smbclient 
 apt-install cifs-utils
 apt-install gparted
+apt-install gnome-disk-utility
 
 deb-conf macchanger macchanger/automatically_run boolean false
 apt-install macchanger
@@ -26,3 +27,8 @@ apt-install macchanger
 deb-conf iptables-persistent iptables-persistent/autosave_v4 boolean false
 deb-conf iptables-persistent iptables-persistent/autosave_v6 boolean false
 apt-install iptables-persistent
+
+# OpenVPN
+apt-install openvpn
+apt-install network-manager-openvpn
+apt-install network-manager-openvpn-gnome

@@ -28,10 +28,6 @@ success "zim style.conf updated"
 
 # zim symbols.list
 wget --quiet -O $dirName/assets/resources/zim-symbols.list https://raw.githubusercontent.com/zim-desktop-wiki/zim-desktop-wiki/master/data/symbols.list
-echo ""                           >> $dirName/assets/resources/zim-symbols.list
-echo "!=	8800  # not equal"    >> $dirName/assets/resources/zim-symbols.list
-echo "<<	171   # left quotes"  >> $dirName/assets/resources/zim-symbols.list
-echo ">>	187   # right quotes" >> $dirName/assets/resources/zim-symbols.list
 success "zim symbols.list updated"
 
 # Firefox user config

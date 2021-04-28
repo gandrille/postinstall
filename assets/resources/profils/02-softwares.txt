@@ -30,7 +30,8 @@ deb-conf wireshark-common wireshark-common/install-setuid boolean true
 apt-install wireshark
 
 apt-install keepassxc
-apt-install pinta
+apt-install seahorse
+apt-install kolourpaint
 
 # audio & video
 apt-install shotwell
@@ -39,8 +40,7 @@ apt-install vlc
 apt-install openshot
 
 ## ================================================================
-## The following packages are installed by default on XUbuntu 20.04
-## and are not needed anymore
-## apt-install gimp
-## apt-install numlockx
+## The following packages are already installed
+## apt-install gimp       --> by default
+## apt-install numlockx   --> by default
 ## ================================================================

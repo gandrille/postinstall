@@ -14,7 +14,7 @@ Here is the output produced with `postinstall help`
 ```
 General infos
 help                 prints this help
-version              prints version number (v1.2)
+version              prints version number (v1.3)
 
 System install eases the installation of important packages
 system-install-info  describes what the installer does
@@ -46,6 +46,8 @@ go install src/github.com/gandrille/postinstall/postinstall.go
 
 
 ## Versions
+
+**[v1.3](../../releases/tag/v1.3)** Designed for XUbuntu 20.04 LTS (Focal Fossa) - minor update
 
 **[v1.2](../../releases/tag/v1.2)** Designed for XUbuntu 20.04 LTS (Focal Fossa)
 

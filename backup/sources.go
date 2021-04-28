@@ -26,6 +26,7 @@ func getSources() []source {
 	var sources []source
 
 	sources = append(sources, FileSource{"~/.netrc", "netrc"})
+	sources = append(sources, FileSource{"~/.sendxmpprc", "sendxmpprc"})
 	sources = append(sources, FileSource{"~/.bashrc-perso", "bashrc-perso"})
 	sources = append(sources, FileSource{"~/.gitconfig", "gitconfig"})
 	sources = append(sources, FileSource{"~/.m2/settings.xml", "settings.xml"})
@@ -39,6 +40,7 @@ func getSources() []source {
 
 	sources = append(sources, UnisonSource{})
 	sources = append(sources, CrontabSource{})
+	sources = append(sources, DpkgSource{})
 	sources = append(sources, XfceSource{})
 	sources = append(sources, XfcePropertySource{})
 
@@ -130,6 +132,29 @@ func (src UnisonSource) Restore(zip zipfile.ZipFile, store []strpair.StrPair) re
 
 func (src UnisonSource) Describe() {
 	result.Describe("unison", "~/.unison/*.prf files will be stored into unison")
+}
+
+/* =========== */
+/* FstabSource */
+/* =========== */
+
+type DpkgSource struct {
+}
+
+func (src DpkgSource) Backup(writer *zip.Writer, kvstore *[]strpair.StrPair) result.Result {
+	if out, err := exec.Command("/usr/bin/dpkg", "--list").Output(); err != nil {
+		return result.NewError("dpkg info not available: " + err.Error())
+	} else {
+		return ProcessBytes("dpkg", "system/dpkg-list.txt", out, writer)
+	}
+}
+
+func (src DpkgSource) Restore(zip zipfile.ZipFile, store []strpair.StrPair) result.Result {
+	return result.NewInfo("dpkg list of installed packages will NOT be restored (It's for info only!)")
+}
+
+func (src DpkgSource) Describe() {
+	result.Describe("dpkg", "Installed packages list will be stored into system/dpkg-list.txt")
 }
 
 /* ============= */
