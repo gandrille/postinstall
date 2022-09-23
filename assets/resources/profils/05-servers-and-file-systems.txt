@@ -8,6 +8,7 @@
 ## - ini-file <file> <section> <key> <value>
 ## - deb-conf <package> <key> <type> <value>
 ## - configure-fuse
+## - configure-imagemagick
 ## - configure-systemd-timesyncd <ntp-server>
 ##--------------------------------------------
 ## Lines starting with two hash signs are comments which are not printed on CLI
@@ -18,7 +19,6 @@ apt-install samba
 apt-install smbclient 
 apt-install cifs-utils
 apt-install gparted
-apt-install gnome-disk-utility
 
 deb-conf macchanger macchanger/automatically_run boolean false
 apt-install macchanger

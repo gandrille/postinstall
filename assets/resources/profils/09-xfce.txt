@@ -8,6 +8,7 @@
 ## - ini-file <file> <section> <key> <value>
 ## - deb-conf <package> <key> <type> <value>
 ## - configure-fuse
+## - configure-imagemagick
 ## - configure-systemd-timesyncd <ntp-server>
 ##--------------------------------------------
 ## Lines starting with two hash signs are comments which are not printed on CLI
@@ -29,13 +30,15 @@ apt-install evince
 apt-install meld
 apt-install gitg
 
-apt-install system-config-printer-gnome
 apt-install xubuntu-restricted-addons
 apt-install thunderbird-gnome-support
+
+apt-install gnome-clocks
 
 ## ================================================================
 ## The following packages are already installed
 ## apt-install xfce4-pulseaudio-plugin      --> by default
 ## apt-install xfce4-power-manager-plugins  --> by default
 ## apt-install gnome-font-viewer            --> by default
+## apt-install system-config-printer-gnome  --> by default
 ## ================================================================

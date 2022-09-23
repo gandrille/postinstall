@@ -14,7 +14,7 @@ Here is the output produced with `postinstall help`
 ```
 General infos
 help                 prints this help
-version              prints version number (v1.3)
+version              prints version number (v1.4)
 
 System install eases the installation of important packages
 system-install-info  describes what the installer does
@@ -38,14 +38,17 @@ The source code is available at https://github.com/gandrille/postinstall
 A go version >= 1.12 is required. You can check your go version using `go version` command.
 
 ```
-cd ${GOPATH:-~/go}
-go get github.com/gandrille/postinstall/...
-src/github.com/gandrille/postinstall/update-assets
-go install src/github.com/gandrille/postinstall/postinstall.go 
+git clone git@github.com:gandrille/postinstall.git
+cd postinstall
+./update-assets
+go install postinstall.go
+${GOPATH:-~/go}/bin/postinstall help
 ```
 
 
 ## Versions
+
+**[v1.4](../../releases/tag/v1.4)** Designed for XUbuntu 22.04 LTS (Jammy Jellyfish) - minor update
 
 **[v1.3](../../releases/tag/v1.3)** Designed for XUbuntu 20.04 LTS (Focal Fossa) - minor update
 

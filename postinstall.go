@@ -17,7 +17,7 @@ import (
 // TODO EDIT version number before releasing
 // =========================================
 func version() string {
-	return "v1.3"
+	return "v1.4"
 }
 
 func main() {

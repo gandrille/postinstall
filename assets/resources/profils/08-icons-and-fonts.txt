@@ -8,6 +8,7 @@
 ## - ini-file <file> <section> <key> <value>
 ## - deb-conf <package> <key> <type> <value>
 ## - configure-fuse
+## - configure-imagemagick
 ## - configure-systemd-timesyncd <ntp-server>
 ##--------------------------------------------
 ## Lines starting with two hash signs are comments which are not printed on CLI
@@ -20,8 +21,7 @@ apt-install ubuntu-budgie-themes
 apt-install papirus-icon-theme
 apt-install deepin-icon-theme
 
-apt-install fonts-ubuntu-font-family-console
-apt-install ttf-ubuntu-font-family
+apt-install fonts-ubuntu-console
 
 apt-install fonts-dosis
 apt-install fonts-inconsolata

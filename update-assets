@@ -11,9 +11,10 @@ highlight() { [ -t 1 ] && tput setaf 3; echo    "$*";       [ -t 1 ] && tput sgr
 set -euo pipefail
 trap "fatal 'Non-null value returned by last executed command'" ERR
 
+cd $dirName
+
 # we need go-bindata
-go get -u github.com/go-bindata/go-bindata/...
-success "go-bindata updated"
+type go-bindata &> /dev/null || fatal "Please install go-bindata first (for instance, using apt under debian)"
 
 # zim template
 rm -Rf $dirName/assets/resources/zim-simple-web-template
@@ -26,16 +27,12 @@ success "zim zim-simple-web-template updated"
 wget --quiet -O $dirName/assets/resources/zim-style.conf https://gandrille.github.io/linux-notes/Softs/zim/style.conf
 success "zim style.conf updated"
 
-# zim symbols.list
-wget --quiet -O $dirName/assets/resources/zim-symbols.list https://raw.githubusercontent.com/zim-desktop-wiki/zim-desktop-wiki/master/data/symbols.list
-success "zim symbols.list updated"
-
 # Firefox user config
 wget --quiet -O $dirName/assets/resources/firefox-user.js https://gandrille.github.io/linux-notes/Softs/Firefox/Config/user.js
 success "Firefox config updated"
 
 # generate
 PATH=$PATH:$GOPATH/bin
-go generate -x $GOPATH/src/github.com/gandrille/postinstall/assets/assetsgenerator.go
+go generate -x assets/assetsgenerator.go
 success "go bindata generated"
 
