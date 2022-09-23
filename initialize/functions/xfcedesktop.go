@@ -5,7 +5,6 @@ import (
 	"strings"
 
 	"github.com/gandrille/go-commons/env"
-	"github.com/gandrille/go-commons/filesystem"
 	"github.com/gandrille/go-commons/ini"
 	"github.com/gandrille/go-commons/result"
 	"github.com/gandrille/go-commons/strpair"
@@ -52,16 +51,18 @@ func (f XfceDesktopFunction) Run() result.Result {
 
 	// Apparence / Icon set
 	f5 := func() result.Result {
-		return env.SetXfconfProperty("xsettings", "/Net/IconThemeName", "deepin").StandardizeMessage("Apparence / Icon set", "Deepin")
+		return env.SetXfconfProperty("xsettings", "/Net/IconThemeName", "bloom-classic").StandardizeMessage("Apparence / Icon set", "Bloom-classic")
 	}
 
-	// <<Print>> command
+	// 'Print' command
 	f6 := func() result.Result {
-		return env.SetXfconfProperty("xfce4-keyboard-shortcuts", "/commands/custom/Print", "xfce4-screenshooter").StandardizeMessage("<print screen> keyboard shortcut", "xfce4-screenshooter")
+		return env.SetXfconfProperty("xfce4-keyboard-shortcuts", "/commands/custom/Print", "bash -lc \"/usr/bin/xfce4-screenshooter --fullscreen --save shot-$(date +%s).png\"").StandardizeMessage("<print screen> keyboard shortcut", "full screenshot")
 	}
 
-	// Thunar
-	f7 := configureXfceThunar
+	// '<Shift>Print' command
+	f7 := func() result.Result {
+		return env.SetXfconfProperty("xfce4-keyboard-shortcuts", "/commands/custom/<Shift>Print", "xfce4-screenshooter --region --clipboard").StandardizeMessage("<Shift><print screen> keyboard shortcut", "region screenshot")
+	}
 
 	// Xfce Terminal scrolling and Tango color theme
 	f8 := configureXfceTerminal
@@ -147,18 +148,6 @@ func computeResult(nb, nbSkipped, nbUpdated int, name, value, defaultMessage str
 		return result.NewUpdated(name + " updated in " + strconv.Itoa(nbUpdated) + " props with value " + value + " (" + strconv.Itoa(nbSkipped) + " props already set)")
 	} else {
 		return result.NewUpdated(defaultMessage)
-	}
-}
-
-func configureXfceThunar() result.Result {
-	updated, err := filesystem.CreateOrAppendIfNotInFile("~/.config/Thunar/accels.scm", "(gtk_accel_path \"<Actions>/ThunarWindow/open-parent\" \"BackSpace\")")
-	if err != nil {
-		return result.NewError("Can't configure Thunar: " + err.Error())
-	}
-	if updated {
-		return result.NewUpdated("Thunar backspace shortcut updated to move to parent folder (run 'thunar -q' before starting using it)")
-	} else {
-		return result.NewUnchanged("Thunar backspace shortcut already set")
 	}
 }
 

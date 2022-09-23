@@ -8,6 +8,7 @@
 ## - ini-file <file> <section> <key> <value>
 ## - deb-conf <package> <key> <type> <value>
 ## - configure-fuse
+## - configure-imagemagick
 ## - configure-systemd-timesyncd <ntp-server>
 ##--------------------------------------------
 ## Lines starting with two hash signs are comments which are not printed on CLI
@@ -31,6 +32,7 @@ apt-install apache2-utils
 apt-install concalc
 apt-install inotify-tools
 apt-install entr
+apt-install pv
 apt-install grabc
 apt-install xclip
 apt-install trash-cli

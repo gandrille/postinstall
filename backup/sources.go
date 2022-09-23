@@ -35,8 +35,11 @@ func getSources() []source {
 	sources = append(sources, DirSource{"~/.aws", "aws"})
 	sources = append(sources, DirSource{"~/.config/auth", "auth"})
 	sources = append(sources, DirSource{"~/.config/ics", "ics"})
+	sources = append(sources, DirSource{"~/.config/card", "card"})
 	sources = append(sources, DirSource{"~/.config/quick-links", "quick-links"})
 	sources = append(sources, DirSource{"~/.config/webdav", "webdav"})
+	sources = append(sources, DirSource{"~/.config/imapsync", "imapsync"})
+	sources = append(sources, DirSource{"~/.config/GIMP/2.10/scripts/", "gimp-scripts-2.10"})
 
 	sources = append(sources, UnisonSource{})
 	sources = append(sources, CrontabSource{})

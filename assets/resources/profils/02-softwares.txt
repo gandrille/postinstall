@@ -8,6 +8,7 @@
 ## - ini-file <file> <section> <key> <value>
 ## - deb-conf <package> <key> <type> <value>
 ## - configure-fuse
+## - configure-imagemagick
 ## - configure-systemd-timesyncd <ntp-server>
 ##--------------------------------------------
 ## Lines starting with two hash signs are comments which are not printed on CLI
@@ -37,7 +38,6 @@ apt-install kolourpaint
 apt-install shotwell
 apt-install audacity
 apt-install vlc
-apt-install openshot
 
 ## ================================================================
 ## The following packages are already installed

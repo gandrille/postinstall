@@ -40,7 +40,9 @@ func getProcessors() []processor {
 	list = append(list, inifile{})
 	list = append(list, debconf{})
 	list = append(list, fuse{})
+	list = append(list, imagemagick{})
 	list = append(list, systemdtimesyncd{})
+
 	return list
 }
 
@@ -237,6 +239,25 @@ func (e fuse) run(args []string) result.Result {
 	} else {
 		return result.NewUnchanged("File /etc/fuse already contains user_allow_other option")
 	}
+}
+
+// =====================
+// imagemagick processor
+// =====================
+
+type imagemagick struct {
+}
+
+func (e imagemagick) key() string {
+	return "configure-imagemagick"
+}
+
+func (e imagemagick) describe(args []string) string {
+	return "imagemagick config: allows full pdf file manipulation"
+}
+
+func (e imagemagick) run(args []string) result.Result {
+	return filesystem.UpdateLineInFile("/etc/ImageMagick-6/policy.xml", "  <policy domain=\"coder\" rights=\"none\" pattern=\"PDF\" />", "  <policy domain=\"coder\" rights=\"read|write\" pattern=\"PDF\" />", false)
 }
 
 // ==========================

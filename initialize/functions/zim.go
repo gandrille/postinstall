@@ -18,8 +18,7 @@ func (f ZimFunction) Infos() FunctionInfos {
 		Title:            "Zim wiki",
 		ShortDescription: "Better configuration for Zim",
 		LongDescription: `* ~/.config/zim/style.conf theme file is updated with a more modern theme
-* simple-web-template is deployed for HTTP rendering
-* ~/.config/zim/symbols.list is updated with new shortcuts`,
+* simple-web-template is deployed for HTTP rendering`,
 	}
 }
 
@@ -36,10 +35,5 @@ func (f ZimFunction) Run() result.Result {
 		return assets.CopyAssetDirectory("resources/zim-simple-web-template", "~/.local/share/zim/templates/html", true)
 	}
 
-	// symbols.list
-	f3 := func() result.Result {
-		return assets.WriteAsset("resources/zim-symbols.list", "~/.config/zim/symbols.list", true)
-	}
-
-	return execute(f.Infos().Title, f1, f2, f3)
+	return execute(f.Infos().Title, f1, f2)
 }

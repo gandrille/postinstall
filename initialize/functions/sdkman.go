@@ -20,16 +20,16 @@ type SdkManFunction struct {
 func (f SdkManFunction) Infos() FunctionInfos {
 	return FunctionInfos{
 		Title:            "SdkMan! installation",
-		ShortDescription: "Installs SdkMan!, Java8, and Java11",
+		ShortDescription: "Installs SdkMan!, Java11, and Java17",
 		LongDescription: `* Installs SdkMan!
-* Installs latest Java8 release
-* Installs latest Java11 release`,
+* Installs latest Java11 release
+* Installs latest Java17 release`,
 	}
 }
 
 // Run function
 func (f SdkManFunction) Run() result.Result {
-	return execute(f.Infos().Title, installSdkMan, setAutoAnswer, installMaven, installJDK8, installJDK11)
+	return execute(f.Infos().Title, installSdkMan, setAutoAnswer, installMaven, installJDK11, installJDK17)
 }
 
 func installSdkMan() result.Result {
@@ -61,18 +61,18 @@ func installMaven() result.Result {
 	return sdkManCommand("Maven", "~/.sdkman/candidates/maven/", "sdk install maven")
 }
 
-func installJDK8() result.Result {
-	return installJDK(8)
-}
-
 func installJDK11() result.Result {
-	return installJDK(11)
+	return installJDK(11, "open")
 }
 
-func installJDK(jdk int) result.Result {
+func installJDK17() result.Result {
+	return installJDK(17, "oracle")
+}
+
+func installJDK(jdk int, flavor string) result.Result {
 
 	// JDK version
-	cmd1 := buildSdkCmd("sdk list java | cut -d '|' -f 6 | tr -s ' ' | grep '" + strconv.Itoa(jdk) + "\\..*\\.hs-adpt' | sed 's/^ //' | sed 's/ $//' | head -n 1")
+	cmd1 := buildSdkCmd("sdk list java | cut -d '|' -f 6 | tr -s ' ' | grep ' " + strconv.Itoa(jdk) + ".' | grep -- '-" + flavor + "' | sed 's/^ //' | sed 's/ $//' | head -n 1")
 	out, err := cmd1.Output()
 	if err != nil {
 		return result.NewError("Don't know JDK" + strconv.Itoa(jdk) + " version")
@@ -89,7 +89,7 @@ func installJDK(jdk int) result.Result {
 func sdkManCommand(name, checkPath, cmd string) result.Result {
 	exists, err := filesystem.Exists(checkPath)
 	if exists {
-		return result.NewUnchanged(name + " is aready installed")
+		return result.NewUnchanged(name + " is already installed")
 	}
 	if err != nil {
 		return result.NewError("Can't know if " + name + " is installed")
