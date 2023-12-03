@@ -16,13 +16,6 @@ cd $dirName
 # we need go-bindata
 type go-bindata &> /dev/null || fatal "Please install go-bindata first (for instance, using apt under debian)"
 
-# zim template
-rm -Rf $dirName/assets/resources/zim-simple-web-template
-git clone --quiet https://github.com/gandrille/zim-simple-web-template.git $dirName/assets/resources/zim-simple-web-template
-rm $dirName/assets/resources/zim-simple-web-template/README.md
-rm -Rf $dirName/assets/resources/zim-simple-web-template/.git
-success "zim zim-simple-web-template updated"
-
 # zim style
 wget --quiet -O $dirName/assets/resources/zim-style.conf https://gandrille.github.io/linux-notes/Softs/zim/style.conf
 success "zim style.conf updated"
@@ -35,4 +28,3 @@ success "Firefox config updated"
 PATH=$PATH:$GOPATH/bin
 go generate -x assets/assetsgenerator.go
 success "go bindata generated"
-

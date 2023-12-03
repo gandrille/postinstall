@@ -19,6 +19,16 @@
 ##--------------------------------------------
 ## Lines starting with two hash signs are comments which are not printed on CLI
 
-apt-update
-apt-upgrade
-apt-autoremove
+# Common
+apt-install xdg-desktop-portal
+
+# Snap
+snap-install dart-sass
+
+# Flatpak
+apt-install flatpak
+flatpak-add-remote flathub https://flathub.org/repo/flathub.flatpakrepo
+flatpak-install flathub org.chromium.Chromium
+flatpak-launcher /usr/bin/chromium org.chromium.Chromium
+flatpak-install flathub com.spotify.Client
+flatpak-install flathub com.slack.Slack

@@ -4,12 +4,18 @@
 ## - apt-upgrade
 ## - apt-autoremove
 ## - apt-install <packages-names>
+## - snap-install <single-package-name> [<parameters>]
+## - flatpak-add-remote <remote-name> <url>
+## - flatpak-install <remote-name> <application-id>
+## - drawio-install
+## - vscode-install
 ## - sym-link <existing> <alias>
 ## - ini-file <file> <section> <key> <value>
 ## - deb-conf <package> <key> <type> <value>
 ## - configure-fuse
 ## - configure-imagemagick
 ## - configure-systemd-timesyncd <ntp-server>
+## - configure-unattendedUpgrade
 ##--------------------------------------------
 ## Lines starting with two hash signs are comments which are not printed on CLI
 
@@ -30,10 +36,6 @@ apt-install python3-termcolor
 # Node
 apt-install nodejs
 apt-install npm
-apt-install node-less
-
-# Ruby
-apt-install jekyll
 
 # Docker
 apt-install docker.io
@@ -50,5 +52,4 @@ apt-install xdotool
 ## apt-install python3   --> by default
 ## apt-install g++       --> from build-essential
 ## apt-install make      --> from build-essential
-## apt-install ruby-sass --> from jekyll
 ## ================================================================

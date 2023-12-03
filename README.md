@@ -14,7 +14,7 @@ Here is the output produced with `postinstall help`
 ```
 General infos
 help                 prints this help
-version              prints version number (v1.4)
+version              prints version number (v23.10)
 
 System install eases the installation of important packages
 system-install-info  describes what the installer does
@@ -35,7 +35,7 @@ The source code is available at https://github.com/gandrille/postinstall
 
 ## Build
 
-A go version >= 1.12 is required. You can check your go version using `go version` command.
+A go version >= 1.21 is required. You can check your go version using `go version` command.
 
 ```
 git clone git@github.com:gandrille/postinstall.git
@@ -47,6 +47,21 @@ ${GOPATH:-~/go}/bin/postinstall help
 
 
 ## Versions
+
+**[v23.10](../../releases/tag/v23.10)** Designed for XUbuntu 23.10 (Mantic Minotaur) - next LTS preparation
+* System install mode
+   - New processors: `snap-install`, `flatpak-add-remote`, `flatpak-install`, `drawio-install`, `configure-unattendedUpgrade`
+   - Better imagemagick configuration
+   - Profiles updated, and `snap-and-flatpak` profile added
+* User install mode
+   - SDKman! updated with Java 17 and 21 (Temurin flavor)
+   - XFCE terminal colors updated
+   - Zim Web template removed
+* Backup/Restore user config mode
+   - Minor updates
+* Source code
+   - Now requires go version >= 1.21 (uses `slices` package)
+   - Packages layout updated
 
 **[v1.4](../../releases/tag/v1.4)** Designed for XUbuntu 22.04 LTS (Jammy Jellyfish) - minor update
 
@@ -73,11 +88,3 @@ This project is released under the
 * [github.com/google/roboto](https://github.com/google/roboto): [Apache License 2.0](https://github.com/google/roboto/blob/master/LICENSE)
 * [github.com/go-bindata/go-bindata](https://github.com/go-bindata/go-bindata/): [CC0](https://github.com/go-bindata/go-bindata/blob/master/LICENSE)
 * [github.com/gandrille/go-commons](https://github.com/gandrille/go-commons): [Apache License 2.0](https://github.com/gandrille/go-commons/blob/master/LICENSE.txt)
-
-
-## TODO list
-
-**System**
-* auto-upgrade configuration
-* `TODO` tags inside source code
-

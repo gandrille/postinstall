@@ -19,6 +19,8 @@
 ##--------------------------------------------
 ## Lines starting with two hash signs are comments which are not printed on CLI
 
-apt-update
-apt-upgrade
-apt-autoremove
+configure-fuse
+configure-unattendedUpgrade
+configure-imagemagick
+configure-systemd-timesyncd ntp.unice.fr
+apt-install apt-transport-https

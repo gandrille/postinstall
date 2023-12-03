@@ -4,12 +4,18 @@
 ## - apt-upgrade
 ## - apt-autoremove
 ## - apt-install <packages-names>
+## - snap-install <single-package-name> [<parameters>]
+## - flatpak-add-remote <remote-name> <url>
+## - flatpak-install <remote-name> <application-id>
+## - drawio-install
+## - vscode-install
 ## - sym-link <existing> <alias>
 ## - ini-file <file> <section> <key> <value>
 ## - deb-conf <package> <key> <type> <value>
 ## - configure-fuse
 ## - configure-imagemagick
 ## - configure-systemd-timesyncd <ntp-server>
+## - configure-unattendedUpgrade
 ##--------------------------------------------
 ## Lines starting with two hash signs are comments which are not printed on CLI
 
@@ -34,6 +40,9 @@ apt-install xubuntu-restricted-addons
 apt-install thunderbird-gnome-support
 
 apt-install gnome-clocks
+
+apt-install gnome-software
+apt-install gnome-software-plugin-flatpak
 
 ## ================================================================
 ## The following packages are already installed
