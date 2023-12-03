@@ -14,7 +14,7 @@ Here is the output produced with `postinstall help`
 ```
 General infos
 help                 prints this help
-version              prints version number (v1.4)
+version              prints version number (v23.10)
 
 System install eases the installation of important packages
 system-install-info  describes what the installer does
@@ -35,7 +35,7 @@ The source code is available at https://github.com/gandrille/postinstall
 
 ## Build
 
-A go version >= 1.12 is required. You can check your go version using `go version` command.
+A go version >= 1.21 is required. You can check your go version using `go version` command.
 
 ```
 git clone git@github.com:gandrille/postinstall.git
@@ -45,22 +45,6 @@ go install postinstall.go
 ${GOPATH:-~/go}/bin/postinstall help
 ```
 
-
-## Versions
-
-**[v1.4](../../releases/tag/v1.4)** Designed for XUbuntu 22.04 LTS (Jammy Jellyfish) - minor update
-
-**[v1.3](../../releases/tag/v1.3)** Designed for XUbuntu 20.04 LTS (Focal Fossa) - minor update
-
-**[v1.2](../../releases/tag/v1.2)** Designed for XUbuntu 20.04 LTS (Focal Fossa)
-
-**[v1.1](../../releases/tag/v1.1)** First pre-release BEFORE 20.04 LTS (Focal Fossa)
-
-**[v1.0](../../releases/tag/v1.0)** Designed for XUbuntu 18.04 LTS (Bionic Beaver)
-
-**[v0.9](../../releases/tag/v0.9)** Pre-release
-
-
 ## License
 
 This project is released under the
@@ -69,15 +53,4 @@ This project is released under the
 
 **Dependencies**
 * [github.com/fatih/color](https://github.com/fatih/color/): [MIT License](https://github.com/fatih/color/blob/master/LICENSE.md)
-* [github.com/pierrec/lz4](https://github.com/pierrec/lz4): [BSD 3-Clause "New" or "Revised" License](https://github.com/pierrec/lz4/blob/master/LICENSE)
-* [github.com/google/roboto](https://github.com/google/roboto): [Apache License 2.0](https://github.com/google/roboto/blob/master/LICENSE)
-* [github.com/go-bindata/go-bindata](https://github.com/go-bindata/go-bindata/): [CC0](https://github.com/go-bindata/go-bindata/blob/master/LICENSE)
 * [github.com/gandrille/go-commons](https://github.com/gandrille/go-commons): [Apache License 2.0](https://github.com/gandrille/go-commons/blob/master/LICENSE.txt)
-
-
-## TODO list
-
-**System**
-* auto-upgrade configuration
-* `TODO` tags inside source code
-

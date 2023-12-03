@@ -1,0 +1,62 @@
+##--------------------------------------------
+## Valid commands
+## - apt-update
+## - apt-upgrade
+## - apt-autoremove
+## - apt-install <packages-names>
+## - snap-install <single-package-name> [<parameters>]
+## - flatpak-add-remote <remote-name> <url>
+## - flatpak-install <remote-name> <application-id>
+## - drawio-install
+## - vscode-install
+## - sym-link <existing> <alias>
+## - ini-file <file> <section> <key> <value>
+## - deb-conf <package> <key> <type> <value>
+## - configure-fuse
+## - configure-imagemagick
+## - configure-systemd-timesyncd <ntp-server>
+## - configure-unattendedUpgrade
+##--------------------------------------------
+## Lines starting with two hash signs are comments which are not printed on CLI
+
+# common
+apt-install git
+
+# C/Make
+apt-install libboost-all-dev
+apt-install build-essential
+
+# Python3
+apt-install python3-full
+apt-install python3-pip
+apt-install python-is-python3
+apt-install python3-gitlab
+apt-install python3-boto3
+apt-install python3-termcolor
+apt-install python3-pyperclip
+apt-install python3-slixmpp
+apt-install python3-configargparse
+apt-install python3-pyftpdlib
+apt-install python3-geographiclib
+
+# Node
+apt-install nodejs
+apt-install npm
+
+# Docker
+apt-install docker.io
+apt-install docker-compose
+
+# Misc
+apt-install golang
+apt-install yad
+
+# X11 related
+apt-install xdotool
+
+## ================================================================
+## The following packages are already installed
+## apt-install python3   --> by default
+## apt-install g++       --> from build-essential
+## apt-install make      --> from build-essential
+## ================================================================

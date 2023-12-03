@@ -1,0 +1,31 @@
+##--------------------------------------------
+## Valid commands
+## - apt-update
+## - apt-upgrade
+## - apt-autoremove
+## - apt-install <packages-names>
+## - snap-install <single-package-name> [<parameters>]
+## - flatpak-add-remote <remote-name> <url>
+## - flatpak-install <remote-name> <application-id>
+## - drawio-install
+## - vscode-install
+## - sym-link <existing> <alias>
+## - ini-file <file> <section> <key> <value>
+## - deb-conf <package> <key> <type> <value>
+## - configure-fuse
+## - configure-imagemagick
+## - configure-systemd-timesyncd <ntp-server>
+## - configure-unattendedUpgrade
+##--------------------------------------------
+## Lines starting with two hash signs are comments which are not printed on CLI
+
+apt-install texlive-full
+apt-install pandoc
+
+## =================================================================
+## The following packages are installed by default with texlive-full
+## apt-install texlive --> (in fact, it is a small meta package)
+## apt-install texlive-latex-extra
+## apt-install texlive-lang-french
+## apt-install texlive-extra-utils --> provides pdfbook2, pdfjam,...
+## =================================================================

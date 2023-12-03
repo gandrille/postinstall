@@ -1,0 +1,50 @@
+##--------------------------------------------
+## Valid commands
+## - apt-update
+## - apt-upgrade
+## - apt-autoremove
+## - apt-install <packages-names>
+## - snap-install <single-package-name> [<parameters>]
+## - flatpak-add-remote <remote-name> <url>
+## - flatpak-install <remote-name> <application-id>
+## - drawio-install
+## - vscode-install
+## - sym-link <existing> <alias>
+## - ini-file <file> <section> <key> <value>
+## - deb-conf <package> <key> <type> <value>
+## - configure-fuse
+## - configure-imagemagick
+## - configure-systemd-timesyncd <ntp-server>
+## - configure-unattendedUpgrade
+##--------------------------------------------
+## Lines starting with two hash signs are comments which are not printed on CLI
+
+apt-install lame
+apt-install libavcodec-extra
+
+# etcher
+apt-install libssl-dev
+
+# Heic support for ristretto
+apt-install heif-gdk-pixbuf
+apt-install heif-thumbnailer
+
+# Used for playing DVD
+apt-install gstreamer1.0-plugins-bad
+
+# used by Imap-sync
+# see also https://imapsync.lamiral.info/INSTALL.d/INSTALL.Ubuntu.txt
+apt-install libencode-imaputf7-perl
+apt-install libfile-copy-recursive-perl
+apt-install libio-socket-inet6-perl
+apt-install libio-tee-perl
+apt-install libmail-imapclient-perl
+apt-install libterm-readkey-perl
+apt-install libunicode-string-perl
+apt-install libsys-meminfo-perl
+apt-install libfile-tail-perl
+
+## ================================================================
+## The following packages are already installed
+## apt-install webp-pixbuf-loader --> via ristretto and others
+## ================================================================

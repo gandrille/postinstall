@@ -1,0 +1,43 @@
+##--------------------------------------------
+## Valid commands
+## - apt-update
+## - apt-upgrade
+## - apt-autoremove
+## - apt-install <packages-names>
+## - snap-install <single-package-name> [<parameters>]
+## - flatpak-add-remote <remote-name> <url>
+## - flatpak-install <remote-name> <application-id>
+## - drawio-install
+## - vscode-install
+## - sym-link <existing> <alias>
+## - ini-file <file> <section> <key> <value>
+## - deb-conf <package> <key> <type> <value>
+## - configure-fuse
+## - configure-imagemagick
+## - configure-systemd-timesyncd <ntp-server>
+## - configure-unattendedUpgrade
+##--------------------------------------------
+## Lines starting with two hash signs are comments which are not printed on CLI
+
+apt-install openssh-server
+apt-install sshfs
+apt-install samba
+apt-install smbclient 
+apt-install cifs-utils
+apt-install gparted
+
+# Faut-il changer l'adresse MAC automatiquement ?
+deb-conf macchanger macchanger/automatically_run boolean false
+apt-install macchanger
+
+# iptables-persistent
+# Faut-il enregistrer les règles IPv4 actuelles ?
+deb-conf iptables-persistent iptables-persistent/autosave_v4 boolean false
+# Faut-il enregistrer les règles IPv6 actuelles ?
+deb-conf iptables-persistent iptables-persistent/autosave_v6 boolean false
+apt-install iptables-persistent
+
+# OpenVPN
+apt-install openvpn
+apt-install network-manager-openvpn
+apt-install network-manager-openvpn-gnome

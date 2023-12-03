@@ -6,10 +6,10 @@ import (
 
 	"github.com/gandrille/go-commons/env"
 	"github.com/gandrille/go-commons/result"
-	"github.com/gandrille/postinstall/system"
+	"github.com/gandrille/postinstall/systemmode"
+	"github.com/gandrille/postinstall/usermode"
 
-	"github.com/gandrille/postinstall/backup"
-	"github.com/gandrille/postinstall/initialize"
+	"github.com/gandrille/postinstall/backupmode"
 )
 
 // =========================================
@@ -17,7 +17,7 @@ import (
 // TODO EDIT version number before releasing
 // =========================================
 func version() string {
-	return "v1.4"
+	return "v23.10"
 }
 
 func main() {
@@ -38,28 +38,28 @@ func main() {
 
 	// System install
 	case "system-install-info":
-		system.Describe()
+		systemmode.Describe()
 	case "system-install":
 		if env.Username() != "root" {
 			result.PrintRed("You must be root to update the system installation!")
 		} else {
-			system.Run()
+			systemmode.Run()
 		}
 
 	// User install
 	case "user-install-info":
-		initialize.Describe()
+		usermode.Describe()
 	case "user-install":
-		initialize.Run()
+		usermode.Run()
 
 	// Backup
 	case "user-backup-info":
-		backup.Describe()
+		backupmode.Describe()
 	case "user-backup":
-		backup.Backup(args[1:])
+		backupmode.Backup(args[1:])
 	case "user-restore":
 		if len(args) >= 2 {
-			backup.Restore(args[1:])
+			backupmode.Restore(args[1:])
 		} else {
 			usage()
 		}

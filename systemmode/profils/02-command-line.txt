@@ -1,0 +1,82 @@
+##--------------------------------------------
+## Valid commands
+## - apt-update
+## - apt-upgrade
+## - apt-autoremove
+## - apt-install <packages-names>
+## - snap-install <single-package-name> [<parameters>]
+## - flatpak-add-remote <remote-name> <url>
+## - flatpak-install <remote-name> <application-id>
+## - drawio-install
+## - vscode-install
+## - sym-link <existing> <alias>
+## - ini-file <file> <section> <key> <value>
+## - deb-conf <package> <key> <type> <value>
+## - configure-fuse
+## - configure-imagemagick
+## - configure-systemd-timesyncd <ntp-server>
+## - configure-unattendedUpgrade
+##--------------------------------------------
+## Lines starting with two hash signs are comments which are not printed on CLI
+
+# System utils
+apt-install debconf-utils
+apt-install ldap-utils
+apt-install dnsutils
+apt-install whois
+apt-install nmap
+apt-install mat2
+apt-install shellcheck
+apt-install apache2-utils
+
+# audio / video
+apt-install ffmpeg
+apt-install sox
+apt-install libsox-fmt-all
+apt-install mpg123
+apt-install id3v2
+apt-install mediainfo
+apt-install mp3splt
+
+# command line interface
+apt-install unrar
+apt-install bat
+apt-install vim
+apt-install xlsx2csv
+apt-install concalc
+apt-install inotify-tools
+apt-install entr
+apt-install pv
+apt-install grabc
+apt-install xclip
+apt-install trash-cli
+apt-install qrencode
+apt-install wkhtmltopdf
+apt-install qpdf
+apt-install img2pdf
+apt-install rlwrap
+apt-install curl
+apt-install unison 
+apt-install lftp
+apt-install go-sendxmpp
+apt-install oathtool
+
+apt-install bookletimposer
+
+# xml and pdf support
+apt-install xsltproc
+apt-install libxml2-utils
+apt-install fop
+apt-install libsaxonb-java
+apt-install pdftk-java
+
+## ================================================================
+## The following packages are already installed
+## apt-install tree        --> by default
+## apt-install p7zip-full  --> by default
+## apt-install rsync       --> by default
+## apt-install lsof        --> by default
+## apt-install whiptail    --> by default
+## apt-install inxi        --> by default
+## apt-install jq          --> by default
+## ================================================================
