@@ -56,6 +56,7 @@ apt-install qpdf
 apt-install img2pdf
 apt-install rlwrap
 apt-install curl
+apt-install rclone
 apt-install unison 
 apt-install lftp
 apt-install go-sendxmpp

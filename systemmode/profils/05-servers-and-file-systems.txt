@@ -25,6 +25,7 @@ apt-install samba
 apt-install smbclient 
 apt-install cifs-utils
 apt-install gparted
+apt-install android-file-transfer
 
 # Faut-il changer l'adresse MAC automatiquement ?
 deb-conf macchanger macchanger/automatically_run boolean false

@@ -38,6 +38,8 @@ apt-install python3-slixmpp
 apt-install python3-configargparse
 apt-install python3-pyftpdlib
 apt-install python3-geographiclib
+apt-install python3-webvtt
+apt-install python3-pydbus
 
 # Node
 apt-install nodejs

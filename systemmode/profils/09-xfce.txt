@@ -37,7 +37,6 @@ apt-install meld
 apt-install gitg
 
 apt-install xubuntu-restricted-addons
-apt-install thunderbird-gnome-support
 
 apt-install gnome-clocks
 apt-install gnome-characters

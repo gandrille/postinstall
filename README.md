@@ -14,7 +14,7 @@ Here is the output produced with `postinstall help`
 ```
 General infos
 help                 prints this help
-version              prints version number (v23.10)
+version              prints version number (v24.04)
 
 System install eases the installation of important packages
 system-install-info  describes what the installer does
@@ -49,8 +49,3 @@ ${GOPATH:-~/go}/bin/postinstall help
 
 This project is released under the
 [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0.html).
-
-
-**Dependencies**
-* [github.com/fatih/color](https://github.com/fatih/color/): [MIT License](https://github.com/fatih/color/blob/master/LICENSE.md)
-* [github.com/gandrille/go-commons](https://github.com/gandrille/go-commons): [Apache License 2.0](https://github.com/gandrille/go-commons/blob/master/LICENSE.txt)

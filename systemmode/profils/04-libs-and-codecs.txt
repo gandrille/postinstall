@@ -25,10 +25,6 @@ apt-install libavcodec-extra
 # etcher
 apt-install libssl-dev
 
-# Heic support for ristretto
-apt-install heif-gdk-pixbuf
-apt-install heif-thumbnailer
-
 # Used for playing DVD
 apt-install gstreamer1.0-plugins-bad
 
@@ -44,7 +40,12 @@ apt-install libunicode-string-perl
 apt-install libsys-meminfo-perl
 apt-install libfile-tail-perl
 
+# Streamdeck
+apt-install libhidapi-libusb0
+
 ## ================================================================
 ## The following packages are already installed
 ## apt-install webp-pixbuf-loader --> via ristretto and others
+## apt-install heif-gdk-pixbuf --> by default on 24.04
+## apt-install heif-thumbnailer --> by default on 24.04
 ## ================================================================

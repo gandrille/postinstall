@@ -47,7 +47,7 @@ func getSources() []source {
 	sources = append(sources, DirSource{"~/.config/card", "card"})
 	sources = append(sources, DirSource{"~/.config/quick-links", "quick-links"})
 	sources = append(sources, DirSource{"~/.config/webdav", "webdav"})
-	sources = append(sources, DirSource{"~/.config/listen-xmpp", "listen-xmpp"})
+	sources = append(sources, DirSource{"~/.config/spotify", "spotify"})
 
 	// homemade backup/restore procedure
 	sources = append(sources, UnisonSource{})

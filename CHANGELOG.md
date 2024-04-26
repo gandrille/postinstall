@@ -1,6 +1,15 @@
 Changes for postinstall
 =======================
 
+## [v24.04](../../releases/tag/v24.04)
+Designed for XUbuntu 24.04 LTS () - minor update
+* System install mode
+   - Minor updates
+* User install mode
+   - Minor updates
+* Backup/Restore user config mode
+   - Minor updates
+
 ## [v23.10](../../releases/tag/v23.10)
 Designed for XUbuntu 23.10 (Mantic Minotaur) - next LTS preparation
 * System install mode

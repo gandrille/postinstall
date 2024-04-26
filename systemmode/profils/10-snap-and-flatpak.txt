@@ -23,7 +23,7 @@
 snap-install dart-sass
 snap-install chromium
 snap-install slack
-snap-install aws-cli
+snap-install aws-cli --classic
 
 # Flatpak
 flatpak-add-remote flathub https://flathub.org/repo/flathub.flatpakrepo
