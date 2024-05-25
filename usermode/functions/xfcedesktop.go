@@ -22,7 +22,7 @@ func (f XfceDesktopFunction) Infos() FunctionInfos {
 		LongDescription: `* Workspace image background
 * Workspace image background style
 * Window manager theme
-* Disables screensaver
+* Enables tile_on_move
 * Power management
 * Apparence / Style (colors)
 * Apparence / Icon set
@@ -47,9 +47,9 @@ func (f XfceDesktopFunction) Run() result.Result {
 		return env.SetXfconfProperty("xfwm4", "/general/theme", "Arc").StandardizeMessage("Window manager theme", "Arc")
 	}
 
-	// Screensaver disabled
+	// Window manager / tile_on_move
 	f4 := func() result.Result {
-		return env.SetXfconfProperty("xfce4-screensaver", "/saver/enabled", "false").StandardizeMessage("Screensaver", "Disabled")
+		return env.SetXfconfProperty("xfwm4", "/general/tile_on_move", "true").StandardizeMessage("Window manager / tile_on_move", "enabled")
 	}
 
 	// Power-manager Display Power Management Signaling (DPMS)

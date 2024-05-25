@@ -52,6 +52,7 @@ apt-install docker-compose
 # Misc
 apt-install golang
 apt-install yad
+apt-install plantuml
 
 # X11 related
 apt-install xdotool

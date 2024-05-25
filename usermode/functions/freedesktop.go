@@ -17,14 +17,37 @@ func (f FreedesktopFunction) Infos() FunctionInfos {
 	return FunctionInfos{
 		Title:            "Freedesktop",
 		ShortDescription: "Updates configuration according to Freedesktop specification",
-		LongDescription: `Updates the ~/.config/user-dirs.dirs file with XDG directories
+		LongDescription: `* Updates default-web-browser
+* Updates the ~/.config/user-dirs.dirs file with XDG directories
   paths (TEMPLATES, PUBLICSHARE,...) set with $HOME directory`,
 	}
 }
 
 // Run function
 func (f FreedesktopFunction) Run() result.Result {
-	return execute(f.Infos().Title, xdgDirsConfig)
+	f1 := xdgDirsConfig
+
+	f2 := func() result.Result {
+		return xdgSetting("default-web-browser", "chromium_chromium.desktop")
+	}
+
+	return execute(f.Infos().Title, f1, f2)
+}
+
+// ==============================
+// Wrapper for using xdg settings
+// ==============================
+
+func xdgSetting(key, value string) result.Result {
+	updated, err := env.WriteXdgSettings(key, value)
+	if err != nil {
+		return result.NewError("Can't update " + key + ": " + err.Error())
+	}
+
+	if updated {
+		return result.NewUpdated("Key " + key + " updated with value " + value)
+	}
+	return result.NewUnchanged("Key " + key + " already has value " + value)
 }
 
 // ======================================

@@ -3,7 +3,7 @@ module github.com/gandrille/postinstall
 go 1.21
 
 require (
-	github.com/gandrille/go-commons v1.0.0
+	github.com/gandrille/go-commons v1.0.1
 )
 
 require (
