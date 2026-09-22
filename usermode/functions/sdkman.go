@@ -20,16 +20,14 @@ type SdkManFunction struct {
 func (f SdkManFunction) Infos() FunctionInfos {
 	return FunctionInfos{
 		Title:            "SdkMan! installation",
-		ShortDescription: "Installs SdkMan!, Java17, and Java21",
-		LongDescription: `* Installs SdkMan!
-* Installs latest Java17 Temurin release
-* Installs latest Java21 Temurin release`,
+		ShortDescription: "Installs SdkMan!, latest Java25 Temurin release and jbang",
+		LongDescription:  `Installs SdkMan!, latest Java25 Temurin release and jbang`,
 	}
 }
 
 // Run function
 func (f SdkManFunction) Run() result.Result {
-	return execute(f.Infos().Title, installSdkMan, setAutoAnswer, installMaven, installJDK17, installJDK21)
+	return execute(f.Infos().Title, installSdkMan, setAutoAnswer, installMaven, installJDK25, installJbang)
 }
 
 func installSdkMan() result.Result {
@@ -61,18 +59,18 @@ func installMaven() result.Result {
 	return sdkManCommand("Maven", "~/.sdkman/candidates/maven/", "sdk install maven")
 }
 
-func installJDK17() result.Result {
-	return installJDK(17, "tem")
+func installJDK25() result.Result {
+	return installJDK(21, "tem")
 }
 
-func installJDK21() result.Result {
-	return installJDK(21, "tem")
+func installJbang() result.Result {
+		return sdkManCommand("Jbang", "~/.sdkman/candidates/jbang", "sdk install jbang")
 }
 
 func installJDK(jdk int, flavor string) result.Result {
 
 	// JDK version
-	cmd1 := buildSdkCmd("sdk list java | cut -d '|' -f 6 | tr -s ' ' | grep ' " + strconv.Itoa(jdk) + ".' | grep -- '-" + flavor + "' | sed 's/^ //' | sed 's/ $//' | head -n 1")
+	cmd1 := buildSdkCmd("sdk list java | cut -d '|' -f 4 | tr -s ' ' | grep ' " + strconv.Itoa(jdk) + ".' | grep -- '-" + flavor + "' | sed 's/^ //' | sed 's/ $//' | head -n 1")
 	out, err := cmd1.Output()
 	if err != nil {
 		return result.NewError("Don't know JDK" + strconv.Itoa(jdk) + " version")

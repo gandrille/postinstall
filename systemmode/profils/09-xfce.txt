@@ -13,8 +13,6 @@
 ## - ini-file <file> <section> <key> <value>
 ## - deb-conf <package> <key> <type> <value>
 ## - configure-fuse
-## - configure-imagemagick
-## - configure-systemd-timesyncd <ntp-server>
 ## - configure-unattendedUpgrade
 ##--------------------------------------------
 ## Lines starting with two hash signs are comments which are not printed on CLI
@@ -26,8 +24,12 @@ apt-install xfce4-goodies
 
 # Gnome for Xfce
 
-# laptop special keys support (to control screen luminosity)
+# gnome-applets --> better to use lightdm for login screen
+deb-conf gdm3 gdm3/daemon_name string /usr/sbin/gdm3
+deb-conf gdm3 shared/default-x-display-manager select lightdm
+deb-conf lightdm shared/default-x-display-manager select lightdm
 apt-install gnome-applets
+apt-install gnome-user-docs-fr
 
 apt-install gnome-screenshot
 
@@ -35,8 +37,7 @@ apt-install gedit
 apt-install evince
 apt-install meld
 apt-install gitg
-
-apt-install xubuntu-restricted-addons
+apt-install loupe
 
 apt-install gnome-clocks
 apt-install gnome-characters
@@ -44,11 +45,3 @@ apt-install gnome-characters
 apt-install gnome-software-plugin-flatpak
 
 apt-install xubuntu-wallpapers-bionic
-
-## ================================================================
-## The following packages are already installed
-## apt-install xfce4-pulseaudio-plugin      --> by default
-## apt-install xfce4-power-manager-plugins  --> by default
-## apt-install gnome-font-viewer            --> by default
-## apt-install system-config-printer-gnome  --> by default
-## ================================================================

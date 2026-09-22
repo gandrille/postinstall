@@ -30,24 +30,25 @@ func getSources() []source {
 	sources = append(sources, FileSource{"~/.bashrc-perso", "bashrc-perso"})
 	sources = append(sources, FileSource{"~/.gitconfig", "gitconfig"})
 	sources = append(sources, FileSource{"~/.m2/settings.xml", "settings.xml"})
-	sources = append(sources, FileSource{"~/.config/go-sendxmpp/sendxmpprc", "sendxmpprc"})
-	sources = append(sources, FileSource{"~/.config/onedrive/config", "onedrive-config.txt"})
-	sources = append(sources, FileSource{"~/.config/Thunar/uca.xml", "thunar-uca.xml"})
 
 	// standard dirs
 	sources = append(sources, DirSource{"~/.ssh", "ssh"})
 	sources = append(sources, DirSource{"~/.aws", "aws"})
+	sources = append(sources, DirSource{"~/.vdirsyncer", "vdirsyncer"})
+
+	// standard config
+	sources = append(sources, FileSource{"~/.config/onedrive/config", "onedrive-config.txt"})
+	sources = append(sources, FileSource{"~/.config/Thunar/uca.xml", "thunar-uca.xml"})
+	sources = append(sources, FileSource{"~/.config/gtk-3.0/gtk.css", "gtk.css"})
+
 	sources = append(sources, DirSource{"~/.config/imapsync", "imapsync"})
 	sources = append(sources, DirSource{"~/.config/filezilla", "filezilla"})
-	sources = append(sources, DirSource{"~/.config/GIMP/2.10/scripts/", "gimp-scripts-2.10"})
+	sources = append(sources, DirSource{"~/.config/autorandr", "autorandr"})
 
-	// custom dirs
-	// DEPRECATED sources = append(sources, DirSource{"~/.config/auth", "auth"})
-	// DEPRECATED sources = append(sources, DirSource{"~/.config/ics", "ics"})
+	// custom config
 	sources = append(sources, DirSource{"~/.config/card", "card"})
 	sources = append(sources, DirSource{"~/.config/quick-links", "quick-links"})
 	sources = append(sources, DirSource{"~/.config/webdav", "webdav"})
-	sources = append(sources, DirSource{"~/.config/spotify", "spotify"})
 
 	// homemade backup/restore procedure
 	sources = append(sources, UnisonSource{})

@@ -13,14 +13,13 @@
 ## - ini-file <file> <section> <key> <value>
 ## - deb-conf <package> <key> <type> <value>
 ## - configure-fuse
-## - configure-imagemagick
-## - configure-systemd-timesyncd <ntp-server>
 ## - configure-unattendedUpgrade
 ##--------------------------------------------
 ## Lines starting with two hash signs are comments which are not printed on CLI
 
 apt-install lame
 apt-install libavcodec-extra
+apt-install libheif-plugin-libde265
 
 # etcher
 apt-install libssl-dev
@@ -35,17 +34,9 @@ apt-install libfile-copy-recursive-perl
 apt-install libio-socket-inet6-perl
 apt-install libio-tee-perl
 apt-install libmail-imapclient-perl
-apt-install libterm-readkey-perl
 apt-install libunicode-string-perl
 apt-install libsys-meminfo-perl
 apt-install libfile-tail-perl
 
 # Streamdeck
 apt-install libhidapi-libusb0
-
-## ================================================================
-## The following packages are already installed
-## apt-install webp-pixbuf-loader --> via ristretto and others
-## apt-install heif-gdk-pixbuf --> by default on 24.04
-## apt-install heif-thumbnailer --> by default on 24.04
-## ================================================================

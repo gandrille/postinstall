@@ -43,11 +43,11 @@ func getInitFunctions() []functions.Function {
 	list = append(list, functions.XfceDesktopFunction{})
 	list = append(list, functions.BashrcFunction{})
 	list = append(list, functions.DotHiddenFunction{})
-	list = append(list, functions.ZimFunction{})
 	list = append(list, functions.MvnSettingsFunction{})
-	list = append(list, functions.BluemanFunction{})
+	//list = append(list, functions.BluemanFunction{})
 	list = append(list, functions.SdkManFunction{})
 	list = append(list, functions.SSHFunction{})
+	list = append(list, functions.MimeFunction{})
 
 	return list
 }

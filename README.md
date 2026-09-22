@@ -40,7 +40,6 @@ A go version >= 1.21 is required. You can check your go version using `go versio
 ```
 git clone git@github.com:gandrille/postinstall.git
 cd postinstall
-./update-assets
 go install postinstall.go
 ${GOPATH:-~/go}/bin/postinstall help
 ```

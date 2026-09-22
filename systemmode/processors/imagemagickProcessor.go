@@ -5,6 +5,9 @@ import (
 	"github.com/gandrille/go-commons/result"
 )
 
+// DEPRECATED with XUBUNTU 26.04
+// Kept to be reused later on for another file configuration
+
 type imagemagick struct {
 }
 

@@ -13,8 +13,6 @@
 ## - ini-file <file> <section> <key> <value>
 ## - deb-conf <package> <key> <type> <value>
 ## - configure-fuse
-## - configure-imagemagick
-## - configure-systemd-timesyncd <ntp-server>
 ## - configure-unattendedUpgrade
 ##--------------------------------------------
 ## Lines starting with two hash signs are comments which are not printed on CLI
@@ -27,4 +25,4 @@ snap-install aws-cli --classic
 
 # Flatpak
 flatpak-add-remote flathub https://flathub.org/repo/flathub.flatpakrepo
-flatpak-install flathub com.spotify.Client
+## flatpak-install flathub com.spotify.Client

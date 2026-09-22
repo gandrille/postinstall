@@ -44,7 +44,7 @@ func (f XfceDesktopFunction) Run() result.Result {
 
 	// Window manager theme
 	f3 := func() result.Result {
-		return env.SetXfconfProperty("xfwm4", "/general/theme", "Arc").StandardizeMessage("Window manager theme", "Arc")
+		return env.SetXfconfProperty("xfwm4", "/general/theme", "Arc-Dark").StandardizeMessage("Window manager theme", "Arc")
 	}
 
 	// Window manager / tile_on_move

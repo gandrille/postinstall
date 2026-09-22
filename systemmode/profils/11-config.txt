@@ -21,6 +21,4 @@
 
 configure-fuse
 configure-unattendedUpgrade
-configure-imagemagick
-configure-systemd-timesyncd ntp.unice.fr
 apt-install apt-transport-https

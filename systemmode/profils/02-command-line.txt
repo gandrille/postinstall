@@ -13,8 +13,6 @@
 ## - ini-file <file> <section> <key> <value>
 ## - deb-conf <package> <key> <type> <value>
 ## - configure-fuse
-## - configure-imagemagick
-## - configure-systemd-timesyncd <ntp-server>
 ## - configure-unattendedUpgrade
 ##--------------------------------------------
 ## Lines starting with two hash signs are comments which are not printed on CLI
@@ -28,6 +26,8 @@ apt-install nmap
 apt-install mat2
 apt-install shellcheck
 apt-install apache2-utils
+apt-install autorandr
+apt-install apg
 
 # audio / video
 apt-install ffmpeg
@@ -51,7 +51,6 @@ apt-install grabc
 apt-install xclip
 apt-install trash-cli
 apt-install qrencode
-apt-install wkhtmltopdf
 apt-install qpdf
 apt-install img2pdf
 apt-install rlwrap
@@ -59,8 +58,8 @@ apt-install curl
 apt-install rclone
 apt-install unison 
 apt-install lftp
-apt-install go-sendxmpp
 apt-install oathtool
+apt-install vdirsyncer
 
 apt-install bookletimposer
 
@@ -70,14 +69,3 @@ apt-install libxml2-utils
 apt-install fop
 apt-install libsaxonb-java
 apt-install pdftk-java
-
-## ================================================================
-## The following packages are already installed
-## apt-install tree        --> by default
-## apt-install p7zip-full  --> by default
-## apt-install rsync       --> by default
-## apt-install lsof        --> by default
-## apt-install whiptail    --> by default
-## apt-install inxi        --> by default
-## apt-install jq          --> by default
-## ================================================================

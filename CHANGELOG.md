@@ -1,8 +1,22 @@
 Changes for postinstall
 =======================
 
+## [v26.04](../../releases/tag/v26.04)
+Designed for XUbuntu 24.06 LTS (Resolute Raccoon) - minor update
+* System install mode
+   - `configure-systemd-timesyncd` removed
+   - `configure-imagemagick` removed
+   - packages updates
+* User install mode
+   - Zim removed
+* Backup/Restore user config mode
+   - Minor updates
+* misc
+   - update-assets script removed
+
+
 ## [v24.04](../../releases/tag/v24.04)
-Designed for XUbuntu 24.04 LTS () - minor update
+Designed for XUbuntu 24.04 LTS (Noble Numbat) - minor update
 * System install mode
    - Minor updates
 * User install mode

@@ -30,13 +30,12 @@ func getProcessors() []processor {
 	list = append(list, installDrawIO{})
 	list = append(list, installVsCode{})
 	list = append(list, fuse{})
-	list = append(list, imagemagick{})
+	list = append(list, imagemagick{}) // DEPRECATED
 	list = append(list, inifile{})
 	list = append(list, snapInstall{})
 	list = append(list, flatpakAddRemote{})
 	list = append(list, flatpakInstall{})
 	list = append(list, symlink{})
-	list = append(list, systemdtimesyncd{})
 	list = append(list, unattendedUpgrade{})
 
 	return list

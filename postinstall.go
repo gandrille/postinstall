@@ -17,11 +17,13 @@ import (
 // TODO EDIT version number before releasing
 // =========================================
 func version() string {
-	return "v24.04"
+	return "v26.04"
 }
 
 func main() {
 	args := os.Args[1:]
+
+	env.WriteMimeDefautApp("audio/mpeg", "vlcii.desktop")
 
 	if len(args) == 0 {
 		result.PrintRed("Missing parameters: please provide one of the following commands")
